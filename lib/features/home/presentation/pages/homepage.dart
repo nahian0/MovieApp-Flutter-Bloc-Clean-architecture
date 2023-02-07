@@ -160,16 +160,17 @@ class _homepageState extends State<homepage> {
             Row(
               children: [
                 Container(
-                  height: height * 0.30,
+                  height: height * 0.34,
                   width: width,
                   child: ListView.builder(
                       itemCount: movie_posters.length,
                       scrollDirection: Axis.vertical,
                       itemBuilder: (BuildContext context, int index) {
                         return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              height: height * 0.3,
+                              height: height * 0.35,
                               width: width * 0.4,
                               margin: EdgeInsets.only(
                                   top: 10, bottom: 10, right: 20),
@@ -187,16 +188,25 @@ class _homepageState extends State<homepage> {
                                 Text(
                                   movie_names[index],
                                   style: TextStyle(
-                                      fontSize: 15,
+                                      fontSize: 20,
                                       color: Color(0xFF201d52),
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(
-                                  movie_names[index],
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: Color(0xFF201d52),
-                                      fontWeight: FontWeight.bold),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
+                                    ),
+                                    SizedBox(
+                                      width: 3,
+                                    ),
+                                    Text("8.1/10"),
+                                    SizedBox(
+                                      width: 3,
+                                    ),
+                                    Text("IMDB"),
+                                  ],
                                 ),
                               ],
                             ),
