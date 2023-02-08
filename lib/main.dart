@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/features/bookmark/presentation/pages/bookmarks.dart';
+import 'package:myapp/features/details/presentation/pages/DetailsPage.dart';
 import 'package:myapp/features/home/presentation/pages/homepage.dart';
 
 void main() {
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const homepage(),
+      home: BookmarkPage(),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:myapp/features/Navbar/presentation/pages/Navbar.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 
 class homepage extends StatefulWidget {
@@ -12,6 +13,7 @@ class homepage extends StatefulWidget {
 }
 
 class _homepageState extends State<homepage> {
+  GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   List movie_posters = [
     "1917.jpg",
     "bladerunner.jpeg",
@@ -24,6 +26,11 @@ class _homepageState extends State<homepage> {
     "matrix",
     "Venom",
   ];
+
+  List moviegenres = [
+    "Action",
+    "adventure",
+  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -35,15 +42,21 @@ class _homepageState extends State<homepage> {
         MediaQuery.of(context).padding.right;
 
     return Scaffold(
+      key: _globalKey,
+      drawer: Navbar(),
       body: SafeArea(
-        child: Column(
+        child: ListView(
+          //scrollDirection: Axis.vertical,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(
-                  Icons.menu,
-                  color: Color(0xFF201d52),
+                GestureDetector(
+                  onTap: () => _globalKey.currentState?.openDrawer(),
+                  child: Icon(
+                    Icons.menu,
+                    color: Color(0xFF201d52),
+                  ),
                 ),
                 Text(
                   "FilmKu",
@@ -53,7 +66,7 @@ class _homepageState extends State<homepage> {
                       fontWeight: FontWeight.bold),
                 ),
                 Icon(
-                  Icons.notifications,
+                  Icons.notifications_outlined,
                   color: Color(0xFF201d52),
                 )
               ],
@@ -125,11 +138,12 @@ class _homepageState extends State<homepage> {
                             SizedBox(
                               width: 3,
                             ),
-                            Text("8.1/10"),
+                            Text("8.1/10",
+                                style: TextStyle(color: Colors.grey)),
                             SizedBox(
                               width: 3,
                             ),
-                            Text("IMDB"),
+                            Text("IMDB", style: TextStyle(color: Colors.grey)),
                           ],
                         ),
                       ],
@@ -170,8 +184,8 @@ class _homepageState extends State<homepage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              height: height * 0.35,
-                              width: width * 0.4,
+                              height: height * 0.22,
+                              width: width * 0.25,
                               margin: EdgeInsets.only(
                                   top: 10, bottom: 10, right: 20),
                               decoration: BoxDecoration(
@@ -201,13 +215,64 @@ class _homepageState extends State<homepage> {
                                     SizedBox(
                                       width: 3,
                                     ),
-                                    Text("8.1/10"),
+                                    Text("8.1/10",
+                                        style: TextStyle(color: Colors.grey)),
                                     SizedBox(
                                       width: 3,
                                     ),
-                                    Text("IMDB"),
+                                    Text("IMDB",
+                                        style: TextStyle(color: Colors.grey)),
                                   ],
                                 ),
+                                Container(
+                                  height: height * 0.03,
+                                  width: width * 0.5,
+                                  margin: EdgeInsets.only(top: height * 0.02),
+                                  child: ListView.builder(
+                                      itemCount: moviegenres.length,
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Container(
+                                          height: height * 0.035,
+                                          width: width * 0.2,
+                                          margin: EdgeInsets.only(
+                                            right: 10,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            color: Color.fromARGB(
+                                                255, 207, 218, 247),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              moviegenres[index],
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 143, 170, 245)),
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      margin:
+                                          EdgeInsets.only(top: height * 0.01),
+                                      child: Icon(
+                                        Icons.access_time_outlined,
+                                        size: 15,
+                                      ),
+                                    ),
+                                    Container(
+                                        margin:
+                                            EdgeInsets.only(left: width * 0.01),
+                                        child: Text("1 h 48min"))
+                                  ],
+                                )
                               ],
                             ),
                           ],
