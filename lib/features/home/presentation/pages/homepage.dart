@@ -15,14 +15,6 @@ class homepage extends StatefulWidget {
 }
 
 class _homepageState extends State<homepage> {
-  Future<void> initApi() async {
-    Stopwatch s = new Stopwatch();
-    s.start();
-    Api api = Api();
-    await api.getData().then((value) => print(s.elapsedMilliseconds));
-    s.stop();
-  }
-
   GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
 
   List movie_posters = [
@@ -45,6 +37,7 @@ class _homepageState extends State<homepage> {
   @override
   Widget build(BuildContext context) {
     //fetchData();
+    Api();
 
     Size size = MediaQuery.of(context).size;
     double height = size.height -
