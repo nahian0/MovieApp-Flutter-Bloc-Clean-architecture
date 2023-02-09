@@ -3,7 +3,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:myapp/features/Navbar/presentation/pages/Navbar.dart';
+import 'package:myapp/features/home/data/repositories/Now_Showing_reprositories.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
+import 'package:myapp/features/home/data/datasources/Now_Showing_api.dart';
 
 class homepage extends StatefulWidget {
   const homepage({super.key});
@@ -13,7 +15,16 @@ class homepage extends StatefulWidget {
 }
 
 class _homepageState extends State<homepage> {
+  Future<void> initApi() async {
+    Stopwatch s = new Stopwatch();
+    s.start();
+    Api api = Api();
+    await api.getData().then((value) => print(s.elapsedMilliseconds));
+    s.stop();
+  }
+
   GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
+
   List movie_posters = [
     "1917.jpg",
     "bladerunner.jpeg",
@@ -33,6 +44,8 @@ class _homepageState extends State<homepage> {
   ];
   @override
   Widget build(BuildContext context) {
+    //fetchData();
+
     Size size = MediaQuery.of(context).size;
     double height = size.height -
         MediaQuery.of(context).padding.top -
