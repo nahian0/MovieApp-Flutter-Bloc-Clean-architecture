@@ -1,11 +1,52 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:myapp/features/Navbar/presentation/pages/Navbar.dart';
-import 'package:myapp/features/home/data/repositories/Now_Showing_reprositories.dart';
+import 'package:myapp/features/home/data/repositories/now_showing_repository_impl.dart';
+
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 import 'package:myapp/features/home/data/datasources/Now_Showing_api.dart';
+
+import '../../../details/presentation/pages/DetailsPage.dart';
+import '../../data/models/NowPlayingMovies.dart';
+
+class Spalashscreen extends StatefulWidget {
+  const Spalashscreen({super.key});
+
+  @override
+  State<Spalashscreen> createState() => _SpalashscreenState();
+}
+
+class _SpalashscreenState extends State<Spalashscreen> {
+  void initState() {
+    final service = ApiService();
+    service.getNowPlayingMovie();
+    service.getPopularMovie();
+
+    super.initState();
+    // Timer(Duration(seconds: 1), (() {
+    //   initApi().then((value) => Navigator.of(context)
+    //       .pushReplacement(MaterialPageRoute(builder: ((_) => VideoMenu()))));
+    // }));
+    Future.delayed(
+      Duration(seconds: 5),
+      () => Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: ((_) => homepage()),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+    );
+  }
+}
 
 class homepage extends StatefulWidget {
   const homepage({super.key});
@@ -36,9 +77,6 @@ class _homepageState extends State<homepage> {
   ];
   @override
   Widget build(BuildContext context) {
-    //fetchData();
-    Api();
-
     Size size = MediaQuery.of(context).size;
     double height = size.height -
         MediaQuery.of(context).padding.top -
@@ -108,51 +146,70 @@ class _homepageState extends State<homepage> {
               height: height * 0.45,
               width: width,
               child: ListView.builder(
-                  itemCount: movie_posters.length,
+                  itemCount: movieList.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        Container(
-                          height: height * 0.35,
-                          width: width * 0.4,
-                          margin: EdgeInsets.only(left: 10, right: 10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    "images/" + movie_posters[index]),
-                                fit: BoxFit.cover),
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Detailspage(
+                              tittle: movieList[index].title,
+                              description: movieList[index].overview,
+                              average_vote: movieList[index].voteAverage,
+                              backdroppictures: movieList[index].backdropPath,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        Text(
-                          movie_names[index],
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Color(0xFF201d52),
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: Colors.yellow,
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            height: height * 0.35,
+                            width: width * 0.4,
+                            margin: EdgeInsets.only(left: 10, right: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                  image: CachedNetworkImageProvider(
+                                    'https://image.tmdb.org/t/p/w500/' +
+                                        movieList[index].posterPath,
+                                  ),
+                                  fit: BoxFit.cover),
                             ),
-                            SizedBox(
-                              width: 3,
-                            ),
-                            Text("8.1/10",
-                                style: TextStyle(color: Colors.grey)),
-                            SizedBox(
-                              width: 3,
-                            ),
-                            Text("IMDB", style: TextStyle(color: Colors.grey)),
-                          ],
-                        ),
-                      ],
+                          ),
+                          SizedBox(
+                            height: height * 0.02,
+                          ),
+                          Text(
+                            //movieList[index].title,
+                            movieList[index].title,
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: Color(0xFF201d52),
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.star,
+                                color: Colors.yellow,
+                              ),
+                              SizedBox(
+                                width: 3,
+                              ),
+                              Text(movieList[index].voteAverage + "/10",
+                                  style: TextStyle(color: Colors.grey)),
+                              SizedBox(
+                                width: 3,
+                              ),
+                              Text("IMDB",
+                                  style: TextStyle(color: Colors.grey)),
+                            ],
+                          ),
+                        ],
+                      ),
                     );
                   }),
             ),
@@ -183,7 +240,7 @@ class _homepageState extends State<homepage> {
                   height: height * 0.34,
                   width: width,
                   child: ListView.builder(
-                      itemCount: movie_posters.length,
+                      itemCount: PopularmovieList.length,
                       scrollDirection: Axis.vertical,
                       itemBuilder: (BuildContext context, int index) {
                         return Row(
@@ -197,8 +254,10 @@ class _homepageState extends State<homepage> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 image: DecorationImage(
-                                    image: AssetImage(
-                                        "images/" + movie_posters[index]),
+                                    image: CachedNetworkImageProvider(
+                                      'https://image.tmdb.org/t/p/w500/' +
+                                          PopularmovieList[index].posterPath,
+                                    ),
                                     fit: BoxFit.cover),
                               ),
                             ),
@@ -206,9 +265,9 @@ class _homepageState extends State<homepage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  movie_names[index],
+                                  PopularmovieList[index].title,
                                   style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 15,
                                       color: Color(0xFF201d52),
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -221,7 +280,9 @@ class _homepageState extends State<homepage> {
                                     SizedBox(
                                       width: 3,
                                     ),
-                                    Text("8.1/10",
+                                    Text(
+                                        PopularmovieList[index].voteAverage +
+                                            "/10",
                                         style: TextStyle(color: Colors.grey)),
                                     SizedBox(
                                       width: 3,

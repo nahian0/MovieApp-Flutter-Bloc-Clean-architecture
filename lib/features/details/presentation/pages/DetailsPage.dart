@@ -1,9 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class Detailspage extends StatefulWidget {
-  const Detailspage({super.key});
+  String tittle;
+  String average_vote;
+  String description;
+  String backdroppictures;
+
+  Detailspage(
+      {required this.average_vote,
+      required this.description,
+      required this.tittle,
+      required this.backdroppictures});
 
   @override
   State<Detailspage> createState() => _DetailspageState();
@@ -30,7 +40,9 @@ class _DetailspageState extends State<Detailspage> {
             width: width,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("images/1917_landscape.jpeg"),
+                  image: CachedNetworkImageProvider(
+                      'https://image.tmdb.org/t/p/w500/' +
+                          widget.backdroppictures),
                   fit: BoxFit.fill),
             ),
           ),
@@ -53,7 +65,7 @@ class _DetailspageState extends State<Detailspage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "1917",
+                      widget.tittle,
                       style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
@@ -81,7 +93,7 @@ class _DetailspageState extends State<Detailspage> {
                       width: 3,
                     ),
                     Text(
-                      "8.1/10",
+                      widget.average_vote + "/10",
                       style: TextStyle(
                         fontSize: 15,
                         color: Colors.grey,
@@ -203,7 +215,7 @@ class _DetailspageState extends State<Detailspage> {
               Container(
                 margin: EdgeInsets.only(top: height * 0.01, left: width * 0.05),
                 child: Text(
-                  "As an infantry battalion assembles to wage war deep in enemy territory, two soldiers are assigned to race against time and deliver a message that will stop 1,600 men from walking straight into a deadly trap.",
+                  widget.description,
                   style: TextStyle(
                     fontSize: 15,
                     color: Colors.grey,
