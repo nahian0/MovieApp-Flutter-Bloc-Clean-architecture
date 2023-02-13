@@ -1,16 +1,22 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:myapp/features/Navbar/presentation/pages/Navbar.dart';
+import 'package:myapp/features/home/data/datasources/apiServicesNowShowing.dart';
+import 'package:myapp/features/home/data/datasources/ApiServicePopularMovies.dart';
 import 'package:myapp/features/home/data/repositories/now_showing_repository_impl.dart';
 
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
-import 'package:myapp/features/home/data/datasources/Now_Showing_api.dart';
 
 import '../../../details/presentation/pages/DetailsPage.dart';
 import '../../data/models/NowPlayingMovies.dart';
+
+int page = 1;
 
 class Spalashscreen extends StatefulWidget {
   const Spalashscreen({super.key});
@@ -21,9 +27,10 @@ class Spalashscreen extends StatefulWidget {
 
 class _SpalashscreenState extends State<Spalashscreen> {
   void initState() {
-    final service = ApiService();
-    service.getNowPlayingMovie();
-    service.getPopularMovie();
+    final service = ApiServiceNowPlaying();
+    service.getNowPlayingMovie(page);
+    final service1 = ApiServicePopularMovies();
+    service1.getPopularMovie();
 
     super.initState();
     // Timer(Duration(seconds: 1), (() {
@@ -42,8 +49,11 @@ class _SpalashscreenState extends State<Spalashscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
+    return Scaffold(
+      body: Container(
+        color: Colors.white,
+        child: Center(child: CircularProgressIndicator()),
+      ),
     );
   }
 }
@@ -58,18 +68,28 @@ class homepage extends StatefulWidget {
 class _homepageState extends State<homepage> {
   GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
 
-  List movie_posters = [
-    "1917.jpg",
-    "bladerunner.jpeg",
-    "matrix.jpg",
-    "venom.jpg"
-  ];
-  List movie_names = [
-    "1917",
-    "Blade runner",
-    "matrix",
-    "Venom",
-  ];
+  final ScrollController scrollcontroller = ScrollController();
+  bool callnewpage = false;
+
+  void initState() {
+    bool callnewpage = false;
+
+    scrollcontroller.addListener(() {
+      setState(() {
+        callnewpage = scrollcontroller.offset >
+                scrollcontroller.position.maxScrollExtent - 5
+            ? true
+            : false;
+        if (callnewpage == true) {
+          setState(() {
+            final service = ApiServiceNowPlaying();
+            page = page + 1;
+            service.getNowPlayingMovie(page);
+          });
+        }
+      });
+    });
+  }
 
   List moviegenres = [
     "Action",
@@ -129,14 +149,13 @@ class _homepageState extends State<homepage> {
                       fontWeight: FontWeight.bold),
                 ),
                 Container(
-                  height: 30,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black54),
-                  ),
-                  child: Center(child: Text("See more")),
-                )
+                    height: 30,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.black54),
+                    ),
+                    child: Center(child: Text("See more"))),
               ],
             ),
             SizedBox(
@@ -148,6 +167,7 @@ class _homepageState extends State<homepage> {
               child: ListView.builder(
                   itemCount: movieList.length,
                   scrollDirection: Axis.horizontal,
+                  controller: scrollcontroller,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () {
@@ -155,10 +175,10 @@ class _homepageState extends State<homepage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => Detailspage(
-                              tittle: movieList[index].title,
-                              description: movieList[index].overview,
-                              average_vote: movieList[index].voteAverage,
-                              backdroppictures: movieList[index].backdropPath,
+                              tittle: movieList[index].title!,
+                              description: movieList[index].overview!,
+                              average_vote: movieList[index].voteAverage!,
+                              backdroppictures: movieList[index].backdropPath!,
                             ),
                           ),
                         );
@@ -174,21 +194,29 @@ class _homepageState extends State<homepage> {
                               image: DecorationImage(
                                   image: CachedNetworkImageProvider(
                                     'https://image.tmdb.org/t/p/w500/' +
-                                        movieList[index].posterPath,
+                                        movieList[index].posterPath!,
                                   ),
                                   fit: BoxFit.cover),
                             ),
                           ),
                           SizedBox(
-                            height: height * 0.02,
+                            height: height * 0.01,
                           ),
-                          Text(
-                            //movieList[index].title,
-                            movieList[index].title,
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: Color(0xFF201d52),
-                                fontWeight: FontWeight.bold),
+                          Container(
+                            height: height * 0.05,
+                            width: width * 0.4,
+                            child: Center(
+                              child: Text(
+                                //movieList[index].title,
+                                movieList[index].title!,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Color(0xFF201d52),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
                           Row(
                             children: [
@@ -199,7 +227,7 @@ class _homepageState extends State<homepage> {
                               SizedBox(
                                 width: 3,
                               ),
-                              Text(movieList[index].voteAverage + "/10",
+                              Text(movieList[index].voteAverage! + "/10",
                                   style: TextStyle(color: Colors.grey)),
                               SizedBox(
                                 width: 3,
@@ -256,7 +284,7 @@ class _homepageState extends State<homepage> {
                                 image: DecorationImage(
                                     image: CachedNetworkImageProvider(
                                       'https://image.tmdb.org/t/p/w500/' +
-                                          PopularmovieList[index].posterPath,
+                                          PopularmovieList[index].posterPath!,
                                     ),
                                     fit: BoxFit.cover),
                               ),
@@ -265,7 +293,7 @@ class _homepageState extends State<homepage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  PopularmovieList[index].title,
+                                  PopularmovieList[index].title!,
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: Color(0xFF201d52),
@@ -281,7 +309,7 @@ class _homepageState extends State<homepage> {
                                       width: 3,
                                     ),
                                     Text(
-                                        PopularmovieList[index].voteAverage +
+                                        PopularmovieList[index].voteAverage! +
                                             "/10",
                                         style: TextStyle(color: Colors.grey)),
                                     SizedBox(

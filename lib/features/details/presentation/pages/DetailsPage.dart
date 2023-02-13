@@ -64,12 +64,16 @@ class _DetailspageState extends State<Detailspage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      widget.tittle,
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
+                    Container(
+                      height: height * 0.1,
+                      width: width * 0.7,
+                      child: Text(
+                        widget.tittle,
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
                     ),
                     Icon(
                       Icons.bookmark_outline_outlined,
@@ -203,7 +207,7 @@ class _DetailspageState extends State<Detailspage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: height * 0.04, left: width * 0.05),
+                margin: EdgeInsets.only(top: height * 0.02, left: width * 0.05),
                 child: Text(
                   "Description",
                   style: TextStyle(
@@ -214,12 +218,19 @@ class _DetailspageState extends State<Detailspage> {
               ),
               Container(
                 margin: EdgeInsets.only(top: height * 0.01, left: width * 0.05),
-                child: Text(
-                  widget.description,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.grey,
-                  ),
+                height: height * 0.20,
+                width: width * 0.8,
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    Text(
+                      widget.description,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ]),

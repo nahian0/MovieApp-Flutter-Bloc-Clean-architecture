@@ -1,19 +1,19 @@
 // ignore_for_file: file_names
 
 class PopularMovie {
-  final String backdropPath;
-  final List genreId;
-  final int id;
-  final String originalLanguage;
-  final String originalTitle;
-  final String overview;
-  final double popularity;
-  final String posterPath;
-  final String releaseDate;
-  final String title;
-  final bool video;
-  final int voteCount;
-  final String voteAverage;
+  final String? backdropPath;
+  final List? genreIds;
+  final int? id;
+  final String? originalLanguage;
+  final String? originalTitle;
+  final String? overview;
+  final double? popularity;
+  final String? posterPath;
+  final String? releaseDate;
+  final String? title;
+  final bool? video;
+  final int? voteCount;
+  final String? voteAverage;
 
   //String error;
 
@@ -30,7 +30,7 @@ class PopularMovie {
     required this.video,
     required this.voteCount,
     required this.voteAverage,
-    required this.genreId,
+    required this.genreIds,
   });
 
   factory PopularMovie.fromJson(dynamic json) {
@@ -47,6 +47,6 @@ class PopularMovie {
         video: json['video'],
         voteCount: json['vote_count'],
         voteAverage: json['vote_average'].toString(),
-        genreId: []);
+        genreIds: json['genre_ids']);
   }
 }

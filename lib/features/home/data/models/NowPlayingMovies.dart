@@ -1,18 +1,18 @@
 // ignore_for_file: file_names
 
 class NowPlayingMovie {
-  final String backdropPath;
-  final int id;
-  final String originalLanguage;
-  final String originalTitle;
-  final String overview;
-  final double popularity;
-  final String posterPath;
-  final String releaseDate;
-  final String title;
-  final bool video;
-  final int voteCount;
-  final String voteAverage;
+  final String? backdropPath;
+  final int? id;
+  final String? originalLanguage;
+  final String? originalTitle;
+  final String? overview;
+  final double? popularity;
+  final String? posterPath;
+  final String? releaseDate;
+  final String? title;
+  final bool? video;
+  final int? voteCount;
+  final String? voteAverage;
 
   NowPlayingMovie(
       {required this.backdropPath,
