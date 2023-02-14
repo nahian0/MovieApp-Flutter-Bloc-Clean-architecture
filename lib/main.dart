@@ -3,6 +3,8 @@ import 'package:myapp/features/bookmark/presentation/pages/bookmarks.dart';
 import 'package:myapp/features/details/presentation/pages/DetailsPage.dart';
 import 'package:myapp/features/home/presentation/pages/homepage.dart';
 
+import 'features/home/presentation/pages/splashscreen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Spalashscreen(),
+      home: SplashScreen(),
     );
   }
 }

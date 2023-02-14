@@ -10,17 +10,20 @@ class ApiServicePopularMovies {
 
   final String baseurl = 'https://api.themoviedb.org/3/movie/';
   final String key = '7891436f22ccc147037bfd45c7ed95d5';
-  final String page = '1';
+
   // final String PopularUrl =
   //     'https://api.themoviedb.org/3/movie/now_playing?api_key=7891436f22ccc147037bfd45c7ed95d5&language=en-US&page=1';
 
-  Future<List<PopularMovie>> getPopularMovie() async {
+  Future<List<PopularMovie>> getPopularMovie(int page) async {
     try {
-      final response1 = await _dio.get(
-          baseurl + 'popular?api_key=' + key + '&language=en-US&page=' + page);
+      final response1 = await _dio.get(baseurl +
+          'popular?api_key=' +
+          key +
+          '&language=en-US&page=' +
+          page.toString());
       var Popularmovies = response1.data['results'] as List;
-      PopularmovieList =
-          Popularmovies.map((m) => PopularMovie.fromJson(m)).toList();
+      var p = Popularmovies.map((m) => PopularMovie.fromJson(m)).toList();
+      PopularmovieList = PopularmovieList + p;
 
       print(PopularmovieList.length);
 
