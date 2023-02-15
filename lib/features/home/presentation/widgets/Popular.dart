@@ -89,6 +89,7 @@ class _PopularMoviesState extends State<PopularMovies> {
                             average_vote: PopularmovieList[index].voteAverage!,
                             backdroppictures:
                                 PopularmovieList[index].backdropPath!,
+                            poster_path: movieList[index].posterPath!,
                           ),
                         ),
                       ),

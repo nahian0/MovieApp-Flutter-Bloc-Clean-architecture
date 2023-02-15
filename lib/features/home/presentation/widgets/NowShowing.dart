@@ -117,6 +117,7 @@ class _NowShowingState extends State<NowShowing> {
                               description: movieList[index].overview!,
                               average_vote: movieList[index].voteAverage!,
                               backdroppictures: movieList[index].backdropPath!,
+                              poster_path: movieList[index].posterPath!,
                             ),
                           ),
                         );

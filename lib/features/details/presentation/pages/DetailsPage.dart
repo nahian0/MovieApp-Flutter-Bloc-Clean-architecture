@@ -2,35 +2,54 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:myapp/features/bookmark/data/repositories/bookmark.dart';
+import 'package:myapp/features/home/presentation/widgets/screensize.dart';
+import 'package:sqflite/sqflite.dart';
 
 class Detailspage extends StatefulWidget {
   String tittle;
   String average_vote;
   String description;
   String backdroppictures;
+  String poster_path;
 
   Detailspage(
       {required this.average_vote,
       required this.description,
       required this.tittle,
-      required this.backdroppictures});
+      required this.backdroppictures,
+      required this.poster_path});
 
   @override
   State<Detailspage> createState() => _DetailspageState();
 }
 
 class _DetailspageState extends State<Detailspage> {
+  bool isloading = true;
+  List<Map<String, dynamic>> _bookmarks = [];
+
+  void _refreshBookmarks() async {
+    final data = await SQLHelper.getItems();
+    setState(() {
+      _bookmarks = data;
+      isloading = false;
+    });
+  }
+
+  void initState() {
+    super.initState();
+    _refreshBookmarks();
+  }
+
+  void _addBookmark(String t, String d, String V_A, String P_P) async {
+    SQLHelper.createItem(t, d, V_A, P_P);
+    _refreshBookmarks();
+    print(_bookmarks.length);
+  }
+
   List moviegenres = ["Action", "adventure", "comedy", "drama"];
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height -
-        MediaQuery.of(context).padding.top -
-        MediaQuery.of(context).padding.bottom;
-    double width = size.width -
-        MediaQuery.of(context).padding.left -
-        MediaQuery.of(context).padding.right;
-
     return SafeArea(
         child: Scaffold(
       body: Stack(
@@ -75,9 +94,15 @@ class _DetailspageState extends State<Detailspage> {
                             color: Colors.black),
                       ),
                     ),
-                    Icon(
-                      Icons.bookmark_outline_outlined,
-                      size: 30,
+                    GestureDetector(
+                      onTap: () {
+                        _addBookmark(widget.tittle, widget.description,
+                            widget.average_vote, widget.poster_path);
+                      },
+                      child: Icon(
+                        Icons.bookmark_outline_outlined,
+                        size: 30,
+                      ),
                     ),
                   ],
                 ),

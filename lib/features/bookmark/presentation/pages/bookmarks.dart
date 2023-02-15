@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:myapp/features/bookmark/data/repositories/bookmark.dart';
 
 class BookmarkPage extends StatefulWidget {
   const BookmarkPage({super.key});
@@ -10,6 +12,23 @@ class BookmarkPage extends StatefulWidget {
 }
 
 class _BookmarkPageState extends State<BookmarkPage> {
+  bool isloading = true;
+  List<Map<String, dynamic>> _bookmarks = [];
+
+  void _refreshBookmarks() async {
+    final data = await SQLHelper.getItems();
+    setState(() {
+      _bookmarks = data;
+      isloading = false;
+    });
+    print(_bookmarks[30]);
+  }
+
+  void initState() {
+    super.initState();
+    _refreshBookmarks();
+  }
+
   List movie_posters = [
     "1917.jpg",
     "bladerunner.jpeg",
@@ -64,7 +83,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
             Container(
               height: height * 0.9,
               child: ListView.builder(
-                  itemCount: movie_posters.length,
+                  itemCount: _bookmarks.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
@@ -96,8 +115,9 @@ class _BookmarkPageState extends State<BookmarkPage> {
                                 left: width * 0.07, top: height * 0.015),
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage(
-                                        "images/" + movie_posters[index]),
+                                    image: CachedNetworkImageProvider(
+                                        'https://image.tmdb.org/t/p/w500/' +
+                                            _bookmarks![32]['poster_path']),
                                     fit: BoxFit.fill),
                                 borderRadius: BorderRadius.circular(10)),
                           ),
@@ -108,7 +128,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  movie_names[index],
+                                  _bookmarks[index]['tittle'],
                                   style: TextStyle(
                                       fontSize: 20,
                                       color: Color(0xFF201d52),
