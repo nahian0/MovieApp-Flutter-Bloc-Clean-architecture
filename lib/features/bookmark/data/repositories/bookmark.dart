@@ -15,7 +15,7 @@ class SQLHelper {
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         title TEXT,
         description TEXT,
-        postar_path TEXT,
+        poster_path TEXT,
         vote_average TEXT,
         createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
       )
@@ -25,7 +25,7 @@ class SQLHelper {
 //create database and table
   static Future<sql.Database> db() async {
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = join(directory.path, 'bookmarks.db');
+    String path = join(directory.path, 'bookmarksdata.db');
     return sql.openDatabase(
       path,
       version: 1,
@@ -36,7 +36,7 @@ class SQLHelper {
   }
 
   static Future<int> createItem(String title, String? descrption,
-      String vote_average, String poster_path) async {
+      String? vote_average, String? poster_path) async {
     final db = await SQLHelper.db();
 
     final data = {

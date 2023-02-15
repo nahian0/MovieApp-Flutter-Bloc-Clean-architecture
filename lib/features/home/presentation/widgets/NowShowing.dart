@@ -19,7 +19,6 @@ class NowShowing extends StatefulWidget {
 
 class _NowShowingState extends State<NowShowing> {
   final ScrollController _scrollcontroller = ScrollController();
-  GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
 
   void initState() {
     bool _callnewpage = false;
@@ -44,37 +43,12 @@ class _NowShowingState extends State<NowShowing> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _globalKey,
-      drawer: Navbar(),
       body: Container(
         color: Colors.white,
         child: Column(
           children: [
             SizedBox(
               height: height * 0.02,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () => _globalKey.currentState?.openDrawer(),
-                  child: Icon(
-                    Icons.menu,
-                    color: Color(0xFF201d52),
-                  ),
-                ),
-                Text(
-                  "FilmKu",
-                  style: TextStyle(
-                      fontSize: 25,
-                      color: Color(0xFF201d52),
-                      fontWeight: FontWeight.bold),
-                ),
-                Icon(
-                  Icons.notifications_outlined,
-                  color: Color(0xFF201d52),
-                )
-              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

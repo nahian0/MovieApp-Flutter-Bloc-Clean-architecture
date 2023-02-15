@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:myapp/features/Navbar/presentation/pages/Navbar.dart';
 import 'package:myapp/features/bookmark/data/repositories/bookmark.dart';
 
 class BookmarkPage extends StatefulWidget {
@@ -21,7 +22,6 @@ class _BookmarkPageState extends State<BookmarkPage> {
       _bookmarks = data;
       isloading = false;
     });
-    print(_bookmarks[30]);
   }
 
   void initState() {
@@ -29,18 +29,11 @@ class _BookmarkPageState extends State<BookmarkPage> {
     _refreshBookmarks();
   }
 
-  List movie_posters = [
-    "1917.jpg",
-    "bladerunner.jpeg",
-    "matrix.jpg",
-    "venom.jpg"
-  ];
-  List movie_names = [
-    "1917",
-    "Blade runner",
-    "matrix",
-    "Venom",
-  ];
+  void _delateitem(int id) async {
+    SQLHelper.deleteItem(id);
+    _refreshBookmarks();
+  }
+
   List moviegenres = [
     "Action",
     "adventure",
@@ -49,6 +42,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
   ];
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
     Size size = MediaQuery.of(context).size;
     double height = size.height -
         MediaQuery.of(context).padding.top -
@@ -58,15 +52,22 @@ class _BookmarkPageState extends State<BookmarkPage> {
         MediaQuery.of(context).padding.right;
 
     return Scaffold(
+      key: _globalKey,
+      drawer: Navbar(),
       body: SafeArea(
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Icon(
-                  Icons.menu,
-                  color: Color(0xFF201d52),
+                GestureDetector(
+                  onTap: () => _globalKey.currentState?.openDrawer(),
+                  child: Container(
+                    child: Icon(
+                      Icons.menu,
+                      color: Color(0xFF201d52),
+                    ),
+                  ),
                 ),
                 SizedBox(
                   width: width * 0.3,
@@ -117,7 +118,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
                                 image: DecorationImage(
                                     image: CachedNetworkImageProvider(
                                         'https://image.tmdb.org/t/p/w500/' +
-                                            _bookmarks![32]['poster_path']),
+                                            _bookmarks[index]['poster_path']),
                                     fit: BoxFit.fill),
                                 borderRadius: BorderRadius.circular(10)),
                           ),
@@ -127,12 +128,16 @@ class _BookmarkPageState extends State<BookmarkPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  _bookmarks[index]['tittle'],
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Color(0xFF201d52),
-                                      fontWeight: FontWeight.bold),
+                                Container(
+                                  height: height * 0.05,
+                                  width: width * 0.4,
+                                  child: Text(
+                                    _bookmarks[index]['title'],
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: Color(0xFF201d52),
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                                 Row(
                                   children: [
@@ -208,13 +213,16 @@ class _BookmarkPageState extends State<BookmarkPage> {
                               ],
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                right: width * 0.02, top: height * 0.03),
-                            child: Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                              size: 40,
+                          GestureDetector(
+                            onTap: () => _delateitem(_bookmarks[index]['id']),
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  right: width * 0.02, top: height * 0.03),
+                              child: Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                                size: 40,
+                              ),
                             ),
                           )
                         ],
