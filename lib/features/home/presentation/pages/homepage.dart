@@ -16,50 +16,39 @@ class homepage extends StatefulWidget {
 }
 
 class _homepageState extends State<homepage> {
-  //GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //key: _globalKey,
+        key: _globalKey,
         drawer: Navbar(),
-        appBar: AppBar(
-          title: Center(
-            child: Text(
-              'FilmKu',
-              style: TextStyle(
-                color: Color(0xFF201d52),
-              ),
-            ),
-          ),
-        ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     GestureDetector(
-                //       onTap: () =>
-                //           null, //_globalKey.currentState?.openDrawer(),
-                //       child: Icon(
-                //         Icons.menu,
-                //         color: Color(0xFF201d52),
-                //       ),
-                //     ),
-                //     Text(
-                //       "FilmKu",
-                //       style: TextStyle(
-                //           fontSize: 25,
-                //           color: Color(0xFF201d52),
-                //           fontWeight: FontWeight.bold),
-                //     ),
-                //     Icon(
-                //       Icons.notifications_outlined,
-                //       color: Color(0xFF201d52),
-                //     )
-                //   ],
-                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () => _globalKey.currentState?.openDrawer(),
+                      child: Icon(
+                        Icons.menu,
+                        color: Color(0xFF201d52),
+                      ),
+                    ),
+                    Text(
+                      "FilmKu",
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: Color(0xFF201d52),
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Icon(
+                      Icons.notifications_outlined,
+                      color: Color(0xFF201d52),
+                    )
+                  ],
+                ),
                 Container(height: height * 0.6, child: NowShowing()),
                 PopularMovies()
                 // Container(color: Colors.amber, child: PopularMovies())
