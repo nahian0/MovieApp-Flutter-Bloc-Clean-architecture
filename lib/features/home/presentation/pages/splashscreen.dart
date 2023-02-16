@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:myapp/features/home/data/datasources/ApiServiceGenres.dart';
 import 'package:myapp/features/home/data/repositories/GenresListLocalDatabase.dart';
+import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import 'package:myapp/features/home/presentation/pages/homepage.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 
@@ -32,11 +33,13 @@ class _SplashScreenState extends State<SplashScreen> {
     // }));
     Future.delayed(
       Duration(seconds: 5),
-      () => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: ((_) => homepage()),
-        ),
-      ),
+      () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: ((_) => homepage()),
+          ),
+        );
+      },
     );
   }
 

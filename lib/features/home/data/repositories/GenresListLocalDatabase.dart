@@ -21,7 +21,7 @@ class GenresLocalDb {
 //create database and table
   static Future<sql.Database> db() async {
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = join(directory.path, 'GenreData.db');
+    String path = join(directory.path, 'Genrelocaldb.db');
     return sql.openDatabase(
       path,
       version: 1,
@@ -51,9 +51,9 @@ class GenresLocalDb {
     return db.query('genres', orderBy: "id");
   }
 
-  static Future<List<Map<String, dynamic>>> getGenre(String id) async {
+  static Future<List<Map<String, dynamic>>> getGenre(int id) async {
     final db = await GenresLocalDb.db();
-    return db.query('items', where: "id = ?", whereArgs: [id], limit: 1);
+    return db.query('genres', where: "id = ?", whereArgs: [id], limit: 1);
   }
 }
 

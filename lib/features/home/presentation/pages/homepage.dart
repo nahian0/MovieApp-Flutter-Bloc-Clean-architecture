@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp/features/Navbar/presentation/pages/Navbar.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicesNowShowing.dart';
 import 'package:myapp/features/home/data/repositories/GenresListLocalDatabase.dart';
+import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import 'package:myapp/features/home/presentation/widgets/NowShowing.dart';
 import 'package:myapp/features/home/presentation/widgets/Popular.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
@@ -16,6 +17,7 @@ class homepage extends StatefulWidget {
 }
 
 class _homepageState extends State<homepage> {
+  GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   List<Map<String, dynamic>> _GenreList = [];
 
   void _LoadGenreList() async {
@@ -23,15 +25,21 @@ class _homepageState extends State<homepage> {
     setState(() {
       _GenreList = data;
     });
+    print(_GenreList.length);
+
+    if (_GenreList.length == 0) {
+      for (int i = 0; i < Genrelist.length; i++) {
+        GenresLocalDb.createGenre(Genrelist[i].id!, Genrelist[i].name!);
+      }
+    }
     print(_GenreList);
   }
 
   void initState() {
-    super.initState();
     _LoadGenreList();
+    super.initState();
   }
 
-  GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

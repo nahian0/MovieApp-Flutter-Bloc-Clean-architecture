@@ -23,10 +23,6 @@ class ApiServiceGenresList {
       var genres = _response.data['genres'] as List;
       Genrelist = genres.map((m) => Genres_Model.fromJson(m)).toList();
 
-      for (int i = 0; i < Genrelist.length; i++) {
-        GenresLocalDb.createGenre(Genrelist[i].id!, Genrelist[i].name!);
-      }
-
       return Genrelist;
     } catch (error, stacktrace) {
       throw Exception(

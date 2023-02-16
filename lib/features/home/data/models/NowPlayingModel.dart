@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'package:flutter/material.dart';
+
 class NowPlayingMovie {
   final String? backdropPath;
   final int? id;
@@ -13,6 +15,7 @@ class NowPlayingMovie {
   final bool? video;
   final int? voteCount;
   final String? voteAverage;
+  final List? genre_ids;
 
   NowPlayingMovie(
       {required this.backdropPath,
@@ -26,7 +29,8 @@ class NowPlayingMovie {
       required this.title,
       required this.video,
       required this.voteCount,
-      required this.voteAverage});
+      required this.voteAverage,
+      required this.genre_ids});
 
   factory NowPlayingMovie.fromJson(dynamic json) {
     return NowPlayingMovie(
@@ -41,6 +45,7 @@ class NowPlayingMovie {
         title: json['title'],
         video: json['video'],
         voteCount: json['vote_count'],
-        voteAverage: json['vote_average'].toString());
+        voteAverage: json['vote_average'].toString(),
+        genre_ids: json['genre_ids']);
   }
 }

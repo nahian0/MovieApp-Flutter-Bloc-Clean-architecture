@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:myapp/features/details/presentation/pages/DetailsPage.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicePopularMovies.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicesNowShowing.dart';
+import 'package:myapp/features/home/data/repositories/GenresListLocalDatabase.dart';
 import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 
@@ -19,6 +20,18 @@ class PopularMovies extends StatefulWidget {
 
 class _PopularMoviesState extends State<PopularMovies> {
   final ScrollController _scrollcontroller = ScrollController();
+  // List<Map<String, dynamic>> _genres = [];
+
+  // getAllgenres(int index) async {
+
+  //   for () {
+  //     var gen =
+  //         await GenresLocalDb.getGenre(PopularmovieList[index].genreIds![i]);
+  //     _genre = _genre + gen;
+  //   }
+  //   _genres = _genre;
+  //   print(_genres);
+  // }
 
   void initState() {
     bool _callnewpage = false;
@@ -40,10 +53,6 @@ class _PopularMoviesState extends State<PopularMovies> {
     });
   }
 
-  List moviegenres = [
-    "Action",
-    "adventure",
-  ];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -150,10 +159,11 @@ class _PopularMoviesState extends State<PopularMovies> {
                                 width: width * 0.5,
                                 margin: EdgeInsets.only(top: height * 0.02),
                                 child: ListView.builder(
-                                    itemCount: moviegenres.length,
+                                    itemCount: PopularmovieList[index]
+                                        .genreIds!
+                                        .length,
                                     scrollDirection: Axis.horizontal,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
+                                    itemBuilder: (BuildContext context, int i) {
                                       return Container(
                                         height: height * 0.035,
                                         width: width * 0.2,
@@ -168,7 +178,7 @@ class _PopularMoviesState extends State<PopularMovies> {
                                         ),
                                         child: Center(
                                           child: Text(
-                                            moviegenres[index],
+                                            'hello',
                                             style: TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 143, 170, 245)),

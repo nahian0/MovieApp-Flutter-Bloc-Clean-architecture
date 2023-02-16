@@ -22,6 +22,7 @@ class _NowShowingState extends State<NowShowing> {
 
   void initState() {
     bool _callnewpage = false;
+    print(movieList[0].genre_ids);
 
     _scrollcontroller.addListener(() {
       setState(() {
