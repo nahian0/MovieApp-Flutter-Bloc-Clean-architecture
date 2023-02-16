@@ -87,7 +87,7 @@ class _NowShowingState extends State<NowShowing> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => Detailspage(
-                              tittle: movieList[index].title!,
+                              title: movieList[index].title!,
                               description: movieList[index].overview!,
                               average_vote: movieList[index].voteAverage!,
                               backdroppictures: movieList[index].backdropPath!,

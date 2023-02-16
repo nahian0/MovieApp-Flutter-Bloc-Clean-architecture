@@ -7,7 +7,7 @@ import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Detailspage extends StatefulWidget {
-  String tittle;
+  String title;
   String average_vote;
   String description;
   String backdroppictures;
@@ -16,7 +16,7 @@ class Detailspage extends StatefulWidget {
   Detailspage(
       {required this.average_vote,
       required this.description,
-      required this.tittle,
+      required this.title,
       required this.backdroppictures,
       required this.poster_path});
 
@@ -26,7 +26,9 @@ class Detailspage extends StatefulWidget {
 
 class _DetailspageState extends State<Detailspage> {
   bool isloading = true;
+  bool addedToBookmark = false;
   List<Map<String, dynamic>> _bookmarks = [];
+  List<Map<String, dynamic>> _item = [];
 
   void _refreshBookmarks() async {
     final data = await SQLHelper.getItems();
@@ -36,13 +38,33 @@ class _DetailspageState extends State<Detailspage> {
     });
   }
 
-  void initState() {
-    super.initState();
+  void _getMovieInfo(String title) async {
+    _item = await SQLHelper.getItem(title);
+    print(_item.length);
+    setState(() {
+      if (_item.length > 0) {
+        print(_item.length);
+        addedToBookmark = true;
+      } else {
+        addedToBookmark = false;
+      }
+    });
+  }
+
+  void _delateitemBytitle(String title) async {
+    SQLHelper.deleteItembytitle(title);
     _refreshBookmarks();
   }
 
-  void _addBookmark(String t, String d, String V_A, String P_P) async {
-    SQLHelper.createItem(t, d, V_A, P_P);
+  void initState() {
+    super.initState();
+    _refreshBookmarks();
+    _getMovieInfo(widget.title);
+  }
+
+  void _addBookmark(String Title, String Description, String Vote_Average,
+      String Poster_path) async {
+    SQLHelper.createItem(Title, Description, Vote_Average, Poster_path);
     _refreshBookmarks();
     print(_bookmarks.length);
   }
@@ -87,7 +109,7 @@ class _DetailspageState extends State<Detailspage> {
                       height: height * 0.1,
                       width: width * 0.7,
                       child: Text(
-                        widget.tittle,
+                        widget.title,
                         style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
@@ -95,14 +117,26 @@ class _DetailspageState extends State<Detailspage> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        _addBookmark(widget.tittle, widget.description,
-                            widget.average_vote, widget.poster_path);
-                      },
-                      child: Icon(
-                        Icons.bookmark_outline_outlined,
-                        size: 30,
-                      ),
+                      onTap: addedToBookmark == false
+                          ? () {
+                              _addBookmark(widget.title, widget.description,
+                                  widget.average_vote, widget.poster_path);
+                              _getMovieInfo(widget.title);
+                            }
+                          : () {
+                              _delateitemBytitle(widget.title);
+                              _getMovieInfo(widget.title);
+                            },
+                      child: addedToBookmark == false
+                          ? Icon(
+                              Icons.bookmark_outline_outlined,
+                              size: 30,
+                            )
+                          : Icon(
+                              Icons.bookmark,
+                              size: 30,
+                              color: Colors.yellow,
+                            ),
                     ),
                   ],
                 ),

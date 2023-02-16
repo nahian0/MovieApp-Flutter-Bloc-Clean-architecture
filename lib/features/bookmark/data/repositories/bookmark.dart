@@ -57,10 +57,25 @@ class SQLHelper {
     return db.query('items', orderBy: "id");
   }
 
+  //get specific item
+  static Future<List<Map<String, dynamic>>> getItem(String title) async {
+    final db = await SQLHelper.db();
+    return db.query('items', where: "title = ?", whereArgs: [title], limit: 1);
+  }
+
   static Future<void> deleteItem(int id) async {
     final db = await SQLHelper.db();
     try {
       await db.delete("items", where: "id = ?", whereArgs: [id]);
+    } catch (err) {
+      debugPrint("Something went wrong when deleting an item: $err");
+    }
+  }
+
+  static Future<void> deleteItembytitle(String title) async {
+    final db = await SQLHelper.db();
+    try {
+      await db.delete("items", where: "title = ?", whereArgs: [title]);
     } catch (err) {
       debugPrint("Something went wrong when deleting an item: $err");
     }

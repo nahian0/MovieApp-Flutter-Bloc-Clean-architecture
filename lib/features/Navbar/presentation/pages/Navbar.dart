@@ -47,35 +47,3 @@ class _NavbarState extends State<Navbar> {
     );
   }
 }
-
-
-
-          // Container(
-          //   margin: EdgeInsets.only(left: 20, top: 50),
-          //   child: Text(
-          //     "home",
-          //     style: TextStyle(
-          //         color: Colors.white,
-          //         //fontWeight: FontWeight.bold,
-          //         fontSize: 25),
-          //   ),
-          // ),
-
-          //           GestureDetector(
-          //   onTap: () => () {
-          //     Navigator.of(context).push(
-          //         MaterialPageRoute(builder: (context) => BookmarkPage()));
-          //   },
-          //   child: Container(
-          //     height: height * 0.05,
-          //     width: width * 0.3,
-          //     margin: EdgeInsets.only(left: 20, top: 20),
-          //     child: Text(
-          //       "Bookmarks",
-          //       style: TextStyle(
-          //           color: Colors.white,
-          //           //fontWeight: FontWeight.bold,
-          //           fontSize: 25),
-          //     ),
-          //   ),
-          // )

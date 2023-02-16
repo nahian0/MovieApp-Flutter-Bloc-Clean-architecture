@@ -84,7 +84,7 @@ class _PopularMoviesState extends State<PopularMovies> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => Detailspage(
-                            tittle: PopularmovieList[index].title!,
+                            title: PopularmovieList[index].title!,
                             description: PopularmovieList[index].overview!,
                             average_vote: PopularmovieList[index].voteAverage!,
                             backdroppictures:
