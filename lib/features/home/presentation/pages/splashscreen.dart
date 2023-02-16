@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:myapp/features/home/data/datasources/ApiServiceGenres.dart';
+import 'package:myapp/features/home/data/repositories/GenresListLocalDatabase.dart';
 import 'package:myapp/features/home/presentation/pages/homepage.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 
 import '../../data/datasources/ApiServicePopularMovies.dart';
-import '../../data/datasources/apiServicesNowShowing.dart';
+import '../../data/datasources/ApiServicesNowShowing.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,6 +22,8 @@ class _SplashScreenState extends State<SplashScreen> {
     service.getNowPlayingMovie(1);
     final service1 = ApiServicePopularMovies();
     service1.getPopularMovie(1);
+    final service2 = ApiServiceGenresList();
+    service2.getGenres();
 
     super.initState();
     // Timer(Duration(seconds: 1), (() {

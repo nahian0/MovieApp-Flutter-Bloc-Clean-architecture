@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:myapp/features/Navbar/presentation/pages/Navbar.dart';
-import 'package:myapp/features/bookmark/data/repositories/bookmark.dart';
+import 'package:myapp/features/bookmark/data/repositories/bookmarkLocalDatabase.dart';
 
 class BookmarkPage extends StatefulWidget {
   const BookmarkPage({super.key});
@@ -17,7 +17,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
   List<Map<String, dynamic>> _bookmarks = [];
 
   void _refreshBookmarks() async {
-    final data = await SQLHelper.getItems();
+    final data = await BookmarkLocalDb.getItems();
     setState(() {
       _bookmarks = data;
       isloading = false;
@@ -30,7 +30,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
   }
 
   void _delateitem(int id) async {
-    SQLHelper.deleteItem(id);
+    BookmarkLocalDb.deleteItem(id);
     _refreshBookmarks();
   }
 

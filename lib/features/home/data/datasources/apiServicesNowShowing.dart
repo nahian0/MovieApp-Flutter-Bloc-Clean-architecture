@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:myapp/features/home/data/models/NowPlayingModel.dart';
 import 'package:myapp/features/home/data/models/PopularModel.dart';
-import '../models/NowPlayingMovies.dart';
-import '../repositories/now_showing_repository_impl.dart';
+import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 
 class ApiServiceNowPlaying {
   final Dio _dio = Dio();

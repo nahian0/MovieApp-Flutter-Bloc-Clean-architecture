@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:myapp/features/bookmark/data/repositories/bookmark.dart';
+import 'package:myapp/features/bookmark/data/repositories/bookmarkLocalDatabase.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -31,7 +31,7 @@ class _DetailspageState extends State<Detailspage> {
   List<Map<String, dynamic>> _item = [];
 
   void _refreshBookmarks() async {
-    final data = await SQLHelper.getItems();
+    final data = await BookmarkLocalDb.getItems();
     setState(() {
       _bookmarks = data;
       isloading = false;
@@ -39,7 +39,7 @@ class _DetailspageState extends State<Detailspage> {
   }
 
   void _getMovieInfo(String title) async {
-    _item = await SQLHelper.getItem(title);
+    _item = await BookmarkLocalDb.getItem(title);
     print(_item.length);
     setState(() {
       if (_item.length > 0) {
@@ -52,7 +52,7 @@ class _DetailspageState extends State<Detailspage> {
   }
 
   void _delateitemBytitle(String title) async {
-    SQLHelper.deleteItembytitle(title);
+    BookmarkLocalDb.deleteItembytitle(title);
     _refreshBookmarks();
   }
 
@@ -64,7 +64,7 @@ class _DetailspageState extends State<Detailspage> {
 
   void _addBookmark(String Title, String Description, String Vote_Average,
       String Poster_path) async {
-    SQLHelper.createItem(Title, Description, Vote_Average, Poster_path);
+    BookmarkLocalDb.createItem(Title, Description, Vote_Average, Poster_path);
     _refreshBookmarks();
     print(_bookmarks.length);
   }

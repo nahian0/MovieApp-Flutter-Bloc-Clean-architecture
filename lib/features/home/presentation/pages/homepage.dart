@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/features/Navbar/presentation/pages/Navbar.dart';
-import 'package:myapp/features/home/data/datasources/apiServicesNowShowing.dart';
-import 'package:myapp/features/home/data/repositories/now_showing_repository_impl.dart';
+import 'package:myapp/features/home/data/datasources/ApiServicesNowShowing.dart';
+import 'package:myapp/features/home/data/repositories/GenresListLocalDatabase.dart';
 import 'package:myapp/features/home/presentation/widgets/NowShowing.dart';
 import 'package:myapp/features/home/presentation/widgets/Popular.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
@@ -16,6 +16,21 @@ class homepage extends StatefulWidget {
 }
 
 class _homepageState extends State<homepage> {
+  List<Map<String, dynamic>> _GenreList = [];
+
+  void _LoadGenreList() async {
+    final data = await GenresLocalDb.getGenres();
+    setState(() {
+      _GenreList = data;
+    });
+    print(_GenreList);
+  }
+
+  void initState() {
+    super.initState();
+    _LoadGenreList();
+  }
+
   GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {

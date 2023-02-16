@@ -4,8 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:myapp/features/details/presentation/pages/DetailsPage.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicePopularMovies.dart';
-import 'package:myapp/features/home/data/datasources/apiServicesNowShowing.dart';
-import 'package:myapp/features/home/data/repositories/now_showing_repository_impl.dart';
+import 'package:myapp/features/home/data/datasources/ApiServicesNowShowing.dart';
+import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 
 int _page = 1;
