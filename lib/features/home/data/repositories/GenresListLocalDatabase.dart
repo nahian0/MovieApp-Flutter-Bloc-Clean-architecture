@@ -53,7 +53,7 @@ class GenresLocalDb {
 
   static Future<List<Map<String, dynamic>>> getGenre(int id) async {
     final db = await GenresLocalDb.db();
-    return db.query('genres', where: "id = ?", whereArgs: [id], limit: 1);
+    return db.rawQuery("select name from genres where id = $id");
   }
 }
 

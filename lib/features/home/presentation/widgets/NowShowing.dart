@@ -27,7 +27,7 @@ class _NowShowingState extends State<NowShowing> {
     _scrollcontroller.addListener(() {
       setState(() {
         _callnewpage = _scrollcontroller.offset >
-                _scrollcontroller.position.maxScrollExtent - 5
+                _scrollcontroller.position.maxScrollExtent - 1000
             ? true
             : false;
         if (_callnewpage == true) {
