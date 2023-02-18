@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:myapp/features/bookmark/data/repositories/bookmarkLocalDatabase.dart';
+import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -12,13 +13,15 @@ class Detailspage extends StatefulWidget {
   String description;
   String backdroppictures;
   String poster_path;
+  int movieindex;
 
   Detailspage(
       {required this.average_vote,
       required this.description,
       required this.title,
       required this.backdroppictures,
-      required this.poster_path});
+      required this.poster_path,
+      required this.movieindex});
 
   @override
   State<Detailspage> createState() => _DetailspageState();
@@ -183,7 +186,8 @@ class _DetailspageState extends State<Detailspage> {
                     right: width * 0.05,
                     top: height * 0.02),
                 child: ListView.builder(
-                    itemCount: moviegenres.length,
+                    itemCount:
+                        PopularmovieList[widget.movieindex].genreIds!.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
@@ -198,7 +202,8 @@ class _DetailspageState extends State<Detailspage> {
                         ),
                         child: Center(
                           child: Text(
-                            moviegenres[index],
+                            PopularmoviesallgenresList[widget.movieindex]
+                                [index],
                             style: TextStyle(
                                 color: Color.fromARGB(255, 143, 170, 245)),
                           ),

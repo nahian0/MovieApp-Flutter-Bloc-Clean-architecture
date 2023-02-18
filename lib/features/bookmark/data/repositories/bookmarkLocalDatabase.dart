@@ -25,7 +25,7 @@ class BookmarkLocalDb {
 //create database and table
   static Future<sql.Database> db() async {
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = join(directory.path, 'bookmarksdata.db');
+    String path = join(directory.path, 'bookmarksdatas.db');
     return sql.openDatabase(
       path,
       version: 1,

@@ -19,12 +19,12 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   void initState() {
+    final service2 = ApiServiceGenresList();
+    service2.getGenres();
     final service = ApiServiceNowPlaying();
     service.getNowPlayingMovie(1);
     final service1 = ApiServicePopularMovies();
     service1.getPopularMovie(1);
-    final service2 = ApiServiceGenresList();
-    service2.getGenres();
 
     super.initState();
     // Timer(Duration(seconds: 1), (() {

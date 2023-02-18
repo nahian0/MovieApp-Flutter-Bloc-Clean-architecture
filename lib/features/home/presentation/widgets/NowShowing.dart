@@ -22,7 +22,7 @@ class _NowShowingState extends State<NowShowing> {
 
   void initState() {
     bool _callnewpage = false;
-    print(movieList[0].genre_ids);
+    //print(movieList[0].genre_ids);
 
     _scrollcontroller.addListener(() {
       setState(() {
@@ -93,6 +93,7 @@ class _NowShowingState extends State<NowShowing> {
                               average_vote: movieList[index].voteAverage!,
                               backdroppictures: movieList[index].backdropPath!,
                               poster_path: movieList[index].posterPath!,
+                              movieindex: index,
                             ),
                           ),
                         );

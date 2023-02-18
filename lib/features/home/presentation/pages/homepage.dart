@@ -25,7 +25,7 @@ class _homepageState extends State<homepage> {
     setState(() {
       _GenreList = data;
     });
-    print(_GenreList.length);
+    print(_GenreList);
 
     if (_GenreList.length == 0) {
       for (int i = 0; i < Genrelist.length; i++) {

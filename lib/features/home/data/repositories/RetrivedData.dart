@@ -8,3 +8,4 @@ List<NowPlayingMovie> movieList = [];
 List<PopularMovie> PopularmovieList = [];
 
 List<Genres_Model> Genrelist = [];
+List PopularmoviesallgenresList = [];
