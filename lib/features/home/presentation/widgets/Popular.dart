@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -20,21 +22,64 @@ class PopularMovies extends StatefulWidget {
 
 class _PopularMoviesState extends State<PopularMovies> {
   final ScrollController _scrollcontroller = ScrollController();
-  // List<Map<String, dynamic>> _genres = [];
 
-  // getAllgenres(int index) async {
+  final Stream<int> _bids = (() {
+    late final StreamController<int> controller;
+    controller = StreamController<int>(
+      onListen: () async {
+        await Future<void>.delayed(const Duration(seconds: 1));
+        controller.add(1);
+        await Future<void>.delayed(const Duration(seconds: 1));
+        await controller.close();
+      },
+    );
+    return controller.stream;
+  })();
 
-  //   for () {
-  //     var gen =
-  //         await GenresLocalDb.getGenre(PopularmovieList[index].genreIds![i]);
-  //     _genre = _genre + gen;
-  //   }
-  //   _genres = _genre;
-  //   print(_genres);
+  final Future<String> _calculation = Future<String>.delayed(
+    const Duration(seconds: 5),
+    () => 'Data Loaded',
+  );
+  List PopularMoviesgenresList = [];
+
+  Future<void> getgenresfromlocaldb(int len) async {
+    int i = 0;
+    for (i = (i + len); i < PopularmovieList.length; i++) {
+      print(i);
+      List _tempgenre = [];
+      for (int j = 0; j < PopularmovieList[i].genreIds!.length; j++) {
+        String _temp = '';
+        final _genid;
+        _genid = PopularmovieList[i].genreIds![j];
+        final gen = await GenresLocalDb.getGenre(_genid);
+        _temp = _temp + await gen[0]['name'];
+        _tempgenre.add(_temp);
+      }
+      PopularMoviesgenresList.add(_tempgenre);
+      print(PopularMoviesgenresList);
+    }
+  }
+
+  // Future<String> getAllgenreByid(int index, int i) async {
+  //   String _temp = '';
+  //   List _genres = [];
+  //   List<Map<String, dynamic>> _genre = [];
+  //   final gen =
+  //       await GenresLocalDb.getGenre(PopularmovieList[index].genreIds![i]);
+  //   _genre = await gen;
+
+  //   _temp = await _genre[0]['name'];
+
+  //   //print(_temp);
+
+  //   return _temp;
+
+  //   //_temp.add(_genre[0]['name']);
   // }
 
   void initState() {
     bool _callnewpage = false;
+    getgenresfromlocaldb(0);
 
     _scrollcontroller.addListener(() {
       setState(() {
@@ -45,6 +90,7 @@ class _PopularMoviesState extends State<PopularMovies> {
         if (_callnewpage == true) {
           setState(() {
             final service = ApiServicePopularMovies();
+
             _page = _page + 1;
             service.getPopularMovie(_page);
           });
@@ -98,7 +144,7 @@ class _PopularMoviesState extends State<PopularMovies> {
                             average_vote: PopularmovieList[index].voteAverage!,
                             backdroppictures:
                                 PopularmovieList[index].backdropPath!,
-                            poster_path: movieList[index].posterPath!,
+                            poster_path: PopularmovieList[index].posterPath!,
                           ),
                         ),
                       ),
@@ -158,33 +204,55 @@ class _PopularMoviesState extends State<PopularMovies> {
                                 height: height * 0.03,
                                 width: width * 0.5,
                                 margin: EdgeInsets.only(top: height * 0.02),
-                                child: ListView.builder(
-                                    itemCount: PopularmovieList[index]
-                                        .genreIds!
-                                        .length,
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (BuildContext context, int i) {
-                                      return Container(
-                                        height: height * 0.035,
-                                        width: width * 0.2,
-                                        margin: EdgeInsets.only(
-                                          right: 10,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          color: Color.fromARGB(
-                                              255, 207, 218, 247),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            'hello',
-                                            style: TextStyle(
+                                child: FutureBuilder<Object>(
+                                    future: _calculation,
+                                    builder: (context, snapshot) {
+                                      return ListView.builder(
+                                          itemCount: PopularmovieList[index]
+                                              .genreIds!
+                                              .length,
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder:
+                                              (BuildContext context, int i) {
+                                            // String a = '';
+                                            // Future<void> foo() async {
+                                            //   a = await getAllgenreByid(index, i);
+
+                                            //   print(
+                                            //       a); // here will be printed patientPhone numbers.
+                                            // }
+
+                                            // foo();
+
+                                            return Container(
+                                              height: height * 0.035,
+                                              width: width * 0.2,
+                                              margin: EdgeInsets.only(
+                                                right: 10,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
                                                 color: Color.fromARGB(
-                                                    255, 143, 170, 245)),
-                                          ),
-                                        ),
-                                      );
+                                                    255, 207, 218, 247),
+                                              ),
+                                              child: Center(
+                                                child: snapshot.hasData
+                                                    ? Text(
+                                                        PopularMoviesgenresList![
+                                                            index][i],
+                                                        style: TextStyle(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    143,
+                                                                    170,
+                                                                    245)),
+                                                      )
+                                                    : Container(),
+                                              ),
+                                            );
+                                          });
                                     }),
                               ),
                               Row(
