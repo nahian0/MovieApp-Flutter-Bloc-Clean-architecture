@@ -22,25 +22,25 @@ class PopularMovies extends StatefulWidget {
 
 class _PopularMoviesState extends State<PopularMovies> {
   final ScrollController _scrollcontroller = ScrollController();
+  bool showgenres = false;
 
-  final Stream<int> _bids = (() {
-    late final StreamController<int> controller;
-    controller = StreamController<int>(
-      onListen: () async {
-        await Future<void>.delayed(const Duration(seconds: 1));
-        controller.add(1);
-        await Future<void>.delayed(const Duration(seconds: 1));
-        await controller.close();
-      },
-    );
-    return controller.stream;
-  })();
+  // final Stream<int> _bids = (() {
+  //   late final StreamController<int> controller;
+  //   controller = StreamController<int>(
+  //     onListen: () async {
+  //       await Future<void>.delayed(const Duration(seconds: 1));
+  //       controller.add(1);
+  //       await Future<void>.delayed(const Duration(seconds: 1));
+  //       await controller.close();
+  //     },
+  //   );
+  //   return controller.stream;
+  // })();
 
   final Future<String> _calculation = Future<String>.delayed(
     const Duration(seconds: 5),
     () => 'Data Loaded',
   );
-  List PopularMoviesgenresList = [];
 
   Future<void> getgenresfromlocaldb(int len) async {
     int i = 0;
@@ -63,32 +63,35 @@ class _PopularMoviesState extends State<PopularMovies> {
   //   //_temp.add(_genre[0]['name']);
   // }
 
-  // void fetchgenres() async{
-  //   for (int i = 0; i < PopularmovieList.length; i++) {
-  //       //print(i);
-  //       List _tempgenre = [];
-  //       for (int j = 0; j < PopularmovieList[i].genreIds!.length; j++) {
-  //         final _genid;
-  //         _genid = PopularmovieList[i].genreIds![j];
-  //         //print(_genid);
+  void fetchgenres() async {
+    List _tempgenreList = [];
+    for (int i = 0; i < PopularmovieList.length; i++) {
+      //print(i);
+      List _tempgenre = [];
 
-  //         final gen = await GenresLocalDb.getGenre(_genid);
+      for (int j = 0; j < PopularmovieList[i].genreIds!.length; j++) {
+        final _genid;
+        _genid = PopularmovieList[i].genreIds![j];
+        //print(_genid);
 
-  //         //print(gen);
+        final gen = await GenresLocalDb.getGenre(_genid);
 
-  //         _tempgenre.add(gen[0]['name']);
-  //         print(_tempgenre);
-  //       }
-  //       PopularmoviesallgenresList.add(_tempgenre);
+        //print(gen);
 
-  //     PopularmovieList = await PopularmovieList + p;
+        _tempgenre.add(gen[0]['name']);
+        // print(_tempgenre);
+      }
+      _tempgenreList.add(_tempgenre);
+    }
+    PopularmoviesallgenresList = _tempgenreList;
 
-  //     }
-  // }
+    //print(PopularmoviesallgenresList);
+  }
 
   void initState() {
     bool _callnewpage = false;
     getgenresfromlocaldb(0);
+    fetchgenres();
 
     _scrollcontroller.addListener(() {
       setState(() {
@@ -101,7 +104,9 @@ class _PopularMoviesState extends State<PopularMovies> {
             final service = ApiServicePopularMovies();
 
             _page = _page + 1;
+
             service.getPopularMovie(_page);
+            fetchgenres();
           });
         }
       });
@@ -110,6 +115,16 @@ class _PopularMoviesState extends State<PopularMovies> {
 
   @override
   Widget build(BuildContext context) {
+    if (PopularmoviesallgenresList.length == PopularmovieList.length) {
+      setState(() {
+        showgenres = true;
+      });
+    } else {
+      setState(() {
+        showgenres = false;
+      });
+    }
+
     return Column(
       children: [
         Row(
@@ -235,61 +250,81 @@ class _PopularMoviesState extends State<PopularMovies> {
                                             // foo();
 
                                             return Container(
-                                              child: PopularmoviesallgenresList[
-                                                              index][i]
-                                                          .toString()
-                                                          .length <=
-                                                      10
+                                              child: showgenres == true
                                                   ? Container(
-                                                      height: height * 0.035,
-                                                      width: width * 0.2,
-                                                      margin: EdgeInsets.only(
-                                                        right: 10,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        color: Color.fromARGB(
-                                                            255, 207, 218, 247),
-                                                      ),
-                                                      child: Center(
-                                                        child: snapshot.hasData
-                                                            ? Container(
-                                                                child: Text(
-                                                                    //
-                                                                    PopularmoviesallgenresList[
-                                                                            index]
-                                                                        [i]),
-                                                              )
-                                                            : Container(),
-                                                      ),
+                                                      child: PopularmoviesallgenresList[
+                                                                      index][i]
+                                                                  .toString()
+                                                                  .length <=
+                                                              10
+                                                          ? Container(
+                                                              height: height *
+                                                                  0.035,
+                                                              width:
+                                                                  width * 0.2,
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                right: 10,
+                                                              ),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15),
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        207,
+                                                                        218,
+                                                                        247),
+                                                              ),
+                                                              child: Center(
+                                                                child: snapshot
+                                                                        .hasData
+                                                                    ? Container(
+                                                                        child: Text(
+                                                                            //
+                                                                            PopularmoviesallgenresList[index][i]),
+                                                                      )
+                                                                    : Container(),
+                                                              ),
+                                                            )
+                                                          : Container(
+                                                              height: height *
+                                                                  0.035,
+                                                              width:
+                                                                  width * 0.3,
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                right: 10,
+                                                              ),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15),
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        207,
+                                                                        218,
+                                                                        247),
+                                                              ),
+                                                              child: Center(
+                                                                child: snapshot
+                                                                        .hasData
+                                                                    ? Container(
+                                                                        child: Text(
+                                                                            //
+                                                                            PopularmoviesallgenresList[index][i]),
+                                                                      )
+                                                                    : Container(),
+                                                              ),
+                                                            ),
                                                     )
-                                                  : Container(
-                                                      height: height * 0.035,
-                                                      width: width * 0.3,
-                                                      margin: EdgeInsets.only(
-                                                        right: 10,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        color: Color.fromARGB(
-                                                            255, 207, 218, 247),
-                                                      ),
-                                                      child: Center(
-                                                        child: snapshot.hasData
-                                                            ? Container(
-                                                                child: Text(
-                                                                    //
-                                                                    PopularmoviesallgenresList[
-                                                                            index]
-                                                                        [i]),
-                                                              )
-                                                            : Container(),
-                                                      ),
-                                                    ),
+                                                  : Container(),
                                             );
                                           });
                                     }),

@@ -28,24 +28,26 @@ class ApiServicePopularMovies {
       // for (int i = 0; i < p[0].genreIds!.length;i++){
 
       // }
-      for (int i = 0; i < p.length; i++) {
-        //print(i);
-        List _tempgenre = [];
-        for (int j = 0; j < p[i].genreIds!.length; j++) {
-          final _genid;
-          _genid = p[i].genreIds![j];
-          //print(_genid);
+      // for (int i = 0; i < 20; i++) {
+      //   //print(i);
+      //   List _tempgenre = [];
+      //   for (int j = 0; j < p[i].genreIds!.length; j++) {
+      //     final _genid;
+      //     _genid = p[i].genreIds![j];
+      //     //print(_genid);
 
-          final gen = await GenresLocalDb.getGenre(_genid);
+      //     final gen = await GenresLocalDb.getGenre(_genid);
 
-          //print(gen);
+      //     //print(gen);
 
-          _tempgenre.add(gen[0]['name']);
-          print(_tempgenre);
-        }
-        PopularmoviesallgenresList.add(_tempgenre);
-      }
-      PopularmovieList = await PopularmovieList + p;
+      //     _tempgenre.add(gen[0]['name']);
+      //     print(_tempgenre);
+      //   }
+
+      //   PopularmoviesallgenresList.add(_tempgenre);
+      // }
+
+      PopularmovieList = PopularmovieList + p;
       //print(allgenres);
 
       // print(PopularmovieList.length);
