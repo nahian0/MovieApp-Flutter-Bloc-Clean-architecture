@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:myapp/features/home/data/models/GenresModel.dart';
 import 'package:myapp/features/home/data/models/PopularModel.dart';
-import 'package:myapp/features/home/data/repositories/GenresListLocalDatabase.dart';
 import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import '../models/NowPlayingModel.dart';
 

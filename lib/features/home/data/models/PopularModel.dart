@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-class PopularMovie {
+class PopularMovieModel {
   final String? backdropPath;
   final List? genreIds;
   final int? id;
@@ -17,7 +17,7 @@ class PopularMovie {
 
   //String error;
 
-  PopularMovie({
+  PopularMovieModel ({
     required this.backdropPath,
     required this.id,
     required this.originalLanguage,
@@ -33,8 +33,8 @@ class PopularMovie {
     required this.genreIds,
   });
 
-  factory PopularMovie.fromJson(dynamic json) {
-    return PopularMovie(
+  factory PopularMovieModel .fromJson(dynamic json) {
+    return PopularMovieModel (
         backdropPath: json['backdrop_path'],
         id: json['id'],
         originalLanguage: json['original_language'],

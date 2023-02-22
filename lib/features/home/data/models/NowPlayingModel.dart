@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-class NowPlayingMovie {
+class NowPlayingMovieModel {
   final String? backdropPath;
   final int? id;
   final String? originalLanguage;
@@ -17,7 +17,7 @@ class NowPlayingMovie {
   final String? voteAverage;
   final List? genre_ids;
 
-  NowPlayingMovie(
+  NowPlayingMovieModel(
       {required this.backdropPath,
       required this.id,
       required this.originalLanguage,
@@ -32,8 +32,8 @@ class NowPlayingMovie {
       required this.voteAverage,
       required this.genre_ids});
 
-  factory NowPlayingMovie.fromJson(dynamic json) {
-    return NowPlayingMovie(
+  factory NowPlayingMovieModel.fromJson(dynamic json) {
+    return NowPlayingMovieModel(
         backdropPath: json['backdrop_path'],
         id: json['id'],
         originalLanguage: json['original_language'],

@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:myapp/features/home/data/models/PopularModel.dart';
-import 'package:myapp/features/home/data/repositories/GenresListLocalDatabase.dart';
 import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import 'package:myapp/features/home/presentation/widgets/Popular.dart';
 
@@ -15,7 +14,8 @@ class ApiServicePopularMovies {
   // final String PopularUrl =
   //     'https://api.themoviedb.org/3/movie/now_playing?api_key=7891436f22ccc147037bfd45c7ed95d5&language=en-US&page=1';
 
-  Future<List<PopularMovie>> getPopularMovie(int page) async {
+  Future<List<PopularMovieModel>> getPopularMovie(int page) async {
+    List<PopularMovieModel> PopularmovieList = [];
     try {
       final response1 = await _dio.get(baseurl +
           'popular?api_key=' +
@@ -23,7 +23,7 @@ class ApiServicePopularMovies {
           '&language=en-US&page=' +
           page.toString());
       var Popularmovies = response1.data['results'] as List;
-      var p = Popularmovies.map((m) => PopularMovie.fromJson(m)).toList();
+      var p = Popularmovies.map((m) => PopularMovieModel.fromJson(m)).toList();
 
       // for (int i = 0; i < p[0].genreIds!.length;i++){
 

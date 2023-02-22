@@ -2,8 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:myapp/features/bookmark/data/repositories/bookmarkLocalDatabase.dart';
+import 'package:myapp/core/data/source/bookmarkLocalDatabase.dart';
 import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
+import 'package:myapp/features/home/presentation/pages/splashscreen.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 import 'package:sqflite/sqflite.dart';
 

@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:myapp/features/Navbar/presentation/pages/Navbar.dart';
-import 'package:myapp/features/bookmark/data/repositories/bookmarkLocalDatabase.dart';
+import 'package:myapp/features/home/presentation/widgets/Navbar.dart';
+import 'package:myapp/core/data/source/bookmarkLocalDatabase.dart';
 
 class BookmarkPage extends StatefulWidget {
   const BookmarkPage({super.key});

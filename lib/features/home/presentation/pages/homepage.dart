@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/features/Navbar/presentation/pages/Navbar.dart';
+import 'package:myapp/core/data/source/GenresListLocalDatabase.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicesNowShowing.dart';
-import 'package:myapp/features/home/data/repositories/GenresListLocalDatabase.dart';
 import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
+import 'package:myapp/features/home/presentation/widgets/Navbar.dart';
 import 'package:myapp/features/home/presentation/widgets/NowShowing.dart';
 import 'package:myapp/features/home/presentation/widgets/Popular.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';

@@ -4,11 +4,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:myapp/core/data/source/GenresListLocalDatabase.dart';
+import 'package:myapp/core/di/app_component.dart';
 import 'package:myapp/features/details/presentation/pages/DetailsPage.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicePopularMovies.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicesNowShowing.dart';
-import 'package:myapp/features/home/data/repositories/GenresListLocalDatabase.dart';
 import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
+import 'package:myapp/features/home/domain/repositories/Home_page_Repositorie.dart';
+import 'package:myapp/features/home/domain/usecases/Popularmoviesusecase.dart';
+import 'package:myapp/features/home/presentation/pages/splashscreen.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 
 int _page = 1;
@@ -24,19 +28,6 @@ class _PopularMoviesState extends State<PopularMovies> {
   final ScrollController _scrollcontroller = ScrollController();
   bool showgenres = false;
 
-  // final Stream<int> _bids = (() {
-  //   late final StreamController<int> controller;
-  //   controller = StreamController<int>(
-  //     onListen: () async {
-  //       await Future<void>.delayed(const Duration(seconds: 1));
-  //       controller.add(1);
-  //       await Future<void>.delayed(const Duration(seconds: 1));
-  //       await controller.close();
-  //     },
-  //   );
-  //   return controller.stream;
-  // })();
-
   final Future<String> _calculation = Future<String>.delayed(
     const Duration(seconds: 5),
     () => 'Data Loaded',
@@ -45,23 +36,6 @@ class _PopularMoviesState extends State<PopularMovies> {
   Future<void> getgenresfromlocaldb(int len) async {
     int i = 0;
   }
-
-  // Future<String> getAllgenreByid(int index, int i) async {
-  //   String _temp = '';
-  //   List _genres = [];
-  //   List<Map<String, dynamic>> _genre = [];
-  //   final gen =
-  //       await GenresLocalDb.getGenre(PopularmovieList[index].genreIds![i]);
-  //   _genre = await gen;
-
-  //   _temp = await _genre[0]['name'];
-
-  //   //print(_temp);
-
-  //   return _temp;
-
-  //   //_temp.add(_genre[0]['name']);
-  // }
 
   void fetchgenres() async {
     List _tempgenreList = [];
@@ -88,6 +62,12 @@ class _PopularMoviesState extends State<PopularMovies> {
     //print(PopularmoviesallgenresList);
   }
 
+  void getpopularmovie(int page) async {
+    PopularMovieUsecase popularMovieUsecase =
+        PopularMovieUsecase(locator<HomePageRepositories>());
+    PopularmovieList = PopularmovieList + await popularMovieUsecase(page: page);
+  }
+
   void initState() {
     bool _callnewpage = false;
     getgenresfromlocaldb(0);
@@ -101,11 +81,9 @@ class _PopularMoviesState extends State<PopularMovies> {
             : false;
         if (_callnewpage == true) {
           setState(() {
-            final service = ApiServicePopularMovies();
-
             _page = _page + 1;
+            getpopularmovie(_page);
 
-            service.getPopularMovie(_page);
             fetchgenres();
           });
         }
