@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'home_bloc.dart';
 
 abstract class HomeState extends Equatable {
@@ -25,6 +26,15 @@ class dataLoadedState extends HomeState {
 }
 
 class dataErrorState extends HomeState {
+  @override
+  List<Object> get props => [];
+}
+
+class newpageLoadState extends HomeState {
+  final List<NowPlayingMovieModel> nowplayingmovielist;
+  newpageLoadState({
+    required this.nowplayingmovielist,
+  });
   @override
   List<Object> get props => [];
 }

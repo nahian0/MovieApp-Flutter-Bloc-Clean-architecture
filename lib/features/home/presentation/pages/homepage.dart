@@ -101,6 +101,15 @@ class _homepageState extends State<homepage> {
                   ),
                   BlocBuilder<HomeBloc, HomeState>(
                     builder: (context, state) {
+                      if (state is dataLoadingState) {
+                        return Column(
+                          children: [
+                            Center(
+                                child: Container(
+                                    child: CircularProgressIndicator())),
+                          ],
+                        );
+                      }
                       if (state is dataLoadedState) {
                         var nowplaying = state.nowplayingmovielist;
 

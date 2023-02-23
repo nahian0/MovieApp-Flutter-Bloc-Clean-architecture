@@ -8,3 +8,5 @@ abstract class HomeEvent extends Equatable {
 }
 
 class LoadHomeEvent extends HomeEvent {}
+
+class LoadNewpageEvent extends HomeEvent {}
