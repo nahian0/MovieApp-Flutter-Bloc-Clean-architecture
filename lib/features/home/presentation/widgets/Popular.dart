@@ -18,7 +18,9 @@ import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 int _page = 1;
 
 class PopularMovies extends StatefulWidget {
-  const PopularMovies({super.key});
+  List PopularmovieList;
+
+  PopularMovies(this.PopularmovieList);
 
   @override
   State<PopularMovies> createState() => _PopularMoviesState();
@@ -39,13 +41,13 @@ class _PopularMoviesState extends State<PopularMovies> {
 
   void fetchgenres() async {
     List _tempgenreList = [];
-    for (int i = 0; i < PopularmovieList.length; i++) {
+    for (int i = 0; i < widget.PopularmovieList.length; i++) {
       //print(i);
       List _tempgenre = [];
 
-      for (int j = 0; j < PopularmovieList[i].genreIds!.length; j++) {
+      for (int j = 0; j < widget.PopularmovieList[i].genreIds!.length; j++) {
         final _genid;
-        _genid = PopularmovieList[i].genreIds![j];
+        _genid = widget.PopularmovieList[i].genreIds![j];
         //print(_genid);
 
         final gen = await GenresLocalDb.getGenre(_genid);
@@ -93,7 +95,7 @@ class _PopularMoviesState extends State<PopularMovies> {
 
   @override
   Widget build(BuildContext context) {
-    if (PopularmoviesallgenresList.length == PopularmovieList.length) {
+    if (PopularmoviesallgenresList.length == widget.PopularmovieList.length) {
       setState(() {
         showgenres = true;
       });
@@ -132,7 +134,7 @@ class _PopularMoviesState extends State<PopularMovies> {
               height: height * 0.34,
               width: width,
               child: ListView.builder(
-                  itemCount: PopularmovieList.length,
+                  itemCount: widget.PopularmovieList.length,
                   scrollDirection: Axis.vertical,
                   controller: _scrollcontroller,
                   itemBuilder: (BuildContext context, int index) {
@@ -141,8 +143,9 @@ class _PopularMoviesState extends State<PopularMovies> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => Detailspage(
-                            title: PopularmovieList[index].title!,
-                            description: PopularmovieList[index].overview!,
+                            title: widget.PopularmovieList[index].title!,
+                            description:
+                                widget.PopularmovieList[index].overview!,
                             average_vote: PopularmovieList[index].voteAverage!,
                             backdroppictures:
                                 PopularmovieList[index].backdropPath!,
@@ -164,7 +167,8 @@ class _PopularMoviesState extends State<PopularMovies> {
                               image: DecorationImage(
                                   image: CachedNetworkImageProvider(
                                     'https://image.tmdb.org/t/p/w500/' +
-                                        PopularmovieList[index].posterPath!,
+                                        widget.PopularmovieList[index]
+                                            .posterPath!,
                                   ),
                                   fit: BoxFit.cover),
                             ),
@@ -176,7 +180,7 @@ class _PopularMoviesState extends State<PopularMovies> {
                                 height: height * 0.05,
                                 width: width * 0.4,
                                 child: Text(
-                                  PopularmovieList[index].title!,
+                                  widget.PopularmovieList[index].title!,
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: Color(0xFF201d52),
@@ -193,7 +197,8 @@ class _PopularMoviesState extends State<PopularMovies> {
                                     width: 3,
                                   ),
                                   Text(
-                                      PopularmovieList[index].voteAverage! +
+                                      widget.PopularmovieList[index]
+                                              .voteAverage! +
                                           "/10",
                                       style: TextStyle(color: Colors.grey)),
                                   SizedBox(
@@ -211,7 +216,8 @@ class _PopularMoviesState extends State<PopularMovies> {
                                     future: _calculation,
                                     builder: (context, snapshot) {
                                       return ListView.builder(
-                                          itemCount: PopularmovieList[index]
+                                          itemCount: widget
+                                              .PopularmovieList[index]
                                               .genreIds!
                                               .length,
                                           scrollDirection: Axis.horizontal,

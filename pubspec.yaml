@@ -44,6 +44,7 @@ dependencies:
   sqflite:
   get: ^4.6.5
   get_it: ^7.2.0
+  flutter_bloc: ^8.1.2
   
 
 dev_dependencies:

@@ -1,10 +1,13 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:myapp/core/di/app_component.dart';
 import 'package:myapp/features/details/presentation/pages/DetailsPage.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicesNowShowing.dart';
+import 'package:myapp/features/home/data/models/NowPlayingModel.dart';
 import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import 'package:myapp/features/home/domain/repositories/Home_page_Repositorie.dart';
 import 'package:myapp/features/home/domain/usecases/NowplayinUsecase.dart';
@@ -14,7 +17,8 @@ import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 int _page = 1;
 
 class NowShowing extends StatefulWidget {
-  const NowShowing({super.key});
+  List NowplayingmovieList;
+  NowShowing(this.NowplayingmovieList);
 
   @override
   State<NowShowing> createState() => _NowShowingState();
@@ -87,7 +91,7 @@ class _NowShowingState extends State<NowShowing> {
               height: height * 0.45,
               width: width,
               child: ListView.builder(
-                  itemCount: NowplayingmovieList.length,
+                  itemCount: widget.NowplayingmovieList.length,
                   scrollDirection: Axis.horizontal,
                   controller: _scrollcontroller,
                   itemBuilder: (BuildContext context, int index) {
@@ -121,7 +125,8 @@ class _NowShowingState extends State<NowShowing> {
                               image: DecorationImage(
                                   image: CachedNetworkImageProvider(
                                     'https://image.tmdb.org/t/p/w500/' +
-                                        NowplayingmovieList[index].posterPath!,
+                                        widget.NowplayingmovieList[index]
+                                            .posterPath!,
                                   ),
                                   fit: BoxFit.cover),
                             ),
@@ -135,7 +140,7 @@ class _NowShowingState extends State<NowShowing> {
                             child: Center(
                               child: Text(
                                 //movieList[index].title,
-                                NowplayingmovieList[index].title!,
+                                widget.NowplayingmovieList[index].title!,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 13,
@@ -155,7 +160,8 @@ class _NowShowingState extends State<NowShowing> {
                                 width: 3,
                               ),
                               Text(
-                                  NowplayingmovieList[index].voteAverage! +
+                                  widget.NowplayingmovieList[index]
+                                          .voteAverage! +
                                       "/10",
                                   style: TextStyle(color: Colors.grey)),
                               SizedBox(
