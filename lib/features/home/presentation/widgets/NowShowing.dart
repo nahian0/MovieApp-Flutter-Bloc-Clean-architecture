@@ -13,16 +13,16 @@ import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import 'package:myapp/features/home/domain/repositories/Home_page_Repositorie.dart';
 import 'package:myapp/features/home/domain/usecases/NowplayinUsecase.dart';
 import 'package:myapp/features/home/domain/usecases/Popularmoviesusecase.dart';
-import 'package:myapp/features/home/presentation/bloc/home_bloc.dart';
+import 'package:myapp/features/home/presentation/bloc/nowshowingbloc/nowshowing_bloc.dart';
+import 'package:myapp/features/home/presentation/pages/homepage.dart';
 import 'package:myapp/features/home/presentation/pages/splashscreen.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
+
+List<NowPlayingMovieModel> NowplayingmovieList = [];
 
 int _page = 1;
 
 class NowShowing extends StatefulWidget {
-  List NowplayingmovieList;
-  NowShowing(this.NowplayingmovieList);
-
   @override
   State<NowShowing> createState() => _NowShowingState();
 }
@@ -30,18 +30,9 @@ class NowShowing extends StatefulWidget {
 class _NowShowingState extends State<NowShowing> {
   NowplayingUsecase _nowplayingUsecase =
       NowplayingUsecase(locator<HomePageRepositories>());
-  // ignore: prefer_final_fields
-  PopularMovieUsecase _popularMovieUsecase =
-      PopularMovieUsecase(locator<HomePageRepositories>());
+
   bool _callnewpage = false;
   final ScrollController _scrollcontroller = ScrollController();
-
-  // void getnowplayingmovie(int page) async {
-  //   NowplayingUsecase nowplayingUsecase =
-  //       NowplayingUsecase(locator<HomePageRepositories>());
-  //   NowplayingmovieList =
-  //       NowplayingmovieList + await nowplayingUsecase(page: page);
-  // }
 
   void initState() {
     //print(movieList[0].genre_ids);
@@ -49,13 +40,12 @@ class _NowShowingState extends State<NowShowing> {
     _scrollcontroller.addListener(() {
       setState(() {
         _callnewpage = _scrollcontroller.offset >
-                _scrollcontroller.position.maxScrollExtent - 10
+                _scrollcontroller.position.maxScrollExtent - 500
             ? true
             : false;
         if (_callnewpage == true) {
           setState(() {
             _page = _page + 1;
-            // getnowplayingmovie(_page);
           });
         }
       });
@@ -64,11 +54,9 @@ class _NowShowingState extends State<NowShowing> {
 
   @override
   Widget build(BuildContext context) {
-    if (_callnewpage == true) {
-      context.read<HomeBloc>().add(LoadNewpageEvent());
-    }
     return BlocProvider(
-      create: (context) => HomeBloc(_nowplayingUsecase, _popularMovieUsecase),
+      create: (context) =>
+          NowshowingBloc(_nowplayingUsecase)..add(Loadnowplayingdata()),
       child: Scaffold(
         body: Container(
           color: Colors.white,
@@ -100,95 +88,113 @@ class _NowShowingState extends State<NowShowing> {
               SizedBox(
                 height: 15,
               ),
-              Container(
-                height: height * 0.45,
-                width: width,
-                child: ListView.builder(
-                    itemCount: widget.NowplayingmovieList.length,
-                    scrollDirection: Axis.horizontal,
-                    controller: _scrollcontroller,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Detailspage(
-                                title: NowplayingmovieList[index].title!,
-                                description:
-                                    NowplayingmovieList[index].overview!,
-                                average_vote:
-                                    NowplayingmovieList[index].voteAverage!,
-                                backdroppictures:
-                                    NowplayingmovieList[index].backdropPath!,
-                                poster_path:
-                                    NowplayingmovieList[index].posterPath!,
-                                movieindex: index,
-                              ),
-                            ),
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              height: height * 0.35,
-                              width: width * 0.4,
-                              margin: EdgeInsets.only(left: 10, right: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                    image: CachedNetworkImageProvider(
-                                      'https://image.tmdb.org/t/p/w500/' +
-                                          widget.NowplayingmovieList[index]
-                                              .posterPath!,
+              BlocBuilder<NowshowingBloc, NowshowingState>(
+                builder: (context, state) {
+                  if (state is NowshowingDataLoaded) {
+                    NowplayingmovieList = state.Nowshowingmovies;
+
+                    return Container(
+                      height: height * 0.45,
+                      width: width,
+                      child: ListView.builder(
+                          itemCount: NowplayingmovieList.length,
+                          scrollDirection: Axis.horizontal,
+                          controller: _scrollcontroller,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (_callnewpage == true) {
+                              context
+                                  .read<NowshowingBloc>()
+                                  .add(LoadnextpageData());
+                              _callnewpage = false;
+                            }
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          homepage() // Detailspage(
+                                      //   title: NowplayingmovieList[index].title!,
+                                      //   description:
+                                      //       NowplayingmovieList[index].overview!,
+                                      //   average_vote:
+                                      //       NowplayingmovieList[index].voteAverage!,
+                                      //   backdroppictures: NowplayingmovieList[index]
+                                      //       .backdropPath!,
+                                      //   poster_path:
+                                      //       NowplayingmovieList[index].posterPath!,
+                                      //   movieindex: index,
+                                      // ),
+                                      ),
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: height * 0.35,
+                                    width: width * 0.4,
+                                    margin:
+                                        EdgeInsets.only(left: 10, right: 10),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                          image: CachedNetworkImageProvider(
+                                            'https://image.tmdb.org/t/p/w500/' +
+                                                NowplayingmovieList[index]
+                                                    .posterPath!,
+                                          ),
+                                          fit: BoxFit.cover),
                                     ),
-                                    fit: BoxFit.cover),
-                              ),
-                            ),
-                            SizedBox(
-                              height: height * 0.01,
-                            ),
-                            Container(
-                              height: height * 0.05,
-                              width: width * 0.4,
-                              child: Center(
-                                child: Text(
-                                  //movieList[index].title,
-                                  widget.NowplayingmovieList[index].title!,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Color(0xFF201d52),
-                                    fontWeight: FontWeight.bold,
                                   ),
-                                ),
+                                  SizedBox(
+                                    height: height * 0.01,
+                                  ),
+                                  Container(
+                                    height: height * 0.05,
+                                    width: width * 0.4,
+                                    child: Center(
+                                      child: Text(
+                                        //movieList[index].title,
+                                        NowplayingmovieList[index].title!,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Color(0xFF201d52),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.star,
+                                        color: Colors.yellow,
+                                      ),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                          NowplayingmovieList[index]
+                                                  .voteAverage! +
+                                              "/10",
+                                          style: TextStyle(color: Colors.grey)),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text("IMDB",
+                                          style: TextStyle(color: Colors.grey)),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.star,
-                                  color: Colors.yellow,
-                                ),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                Text(
-                                    widget.NowplayingmovieList[index]
-                                            .voteAverage! +
-                                        "/10",
-                                    style: TextStyle(color: Colors.grey)),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                Text("IMDB",
-                                    style: TextStyle(color: Colors.grey)),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
+                            );
+                          }),
+                    );
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                },
               ),
             ],
           ),

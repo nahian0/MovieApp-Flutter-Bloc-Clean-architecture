@@ -8,7 +8,6 @@ import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import 'package:myapp/features/home/domain/repositories/Home_page_Repositorie.dart';
 import 'package:myapp/features/home/domain/usecases/NowplayinUsecase.dart';
 import 'package:myapp/features/home/domain/usecases/Popularmoviesusecase.dart';
-import 'package:myapp/features/home/presentation/bloc/home_bloc.dart';
 import 'package:myapp/features/home/presentation/widgets/Navbar.dart';
 import 'package:myapp/features/home/presentation/widgets/NowShowing.dart';
 import 'package:myapp/features/home/presentation/widgets/Popular.dart';
@@ -66,74 +65,43 @@ class _homepageState extends State<homepage> {
         MediaQuery.of(context).padding.right;
 
     screensize(h: height, w: width);
-    return BlocProvider(
-      create: (context) => HomeBloc(_nowplayingUsecase, _popularMovieUsecase)
-        ..add(LoadHomeEvent()),
-      child: Scaffold(
-          key: _globalKey,
-          drawer: Navbar(),
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () => _globalKey.currentState?.openDrawer(),
-                        child: Icon(
-                          Icons.menu,
-                          color: Color(0xFF201d52),
-                        ),
-                      ),
-                      Text(
-                        "FilmKu",
-                        style: TextStyle(
-                            fontSize: 25,
-                            color: Color(0xFF201d52),
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Icon(
-                        Icons.notifications_outlined,
+    return Scaffold(
+        key: _globalKey,
+        drawer: Navbar(),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () => _globalKey.currentState?.openDrawer(),
+                      child: Icon(
+                        Icons.menu,
                         color: Color(0xFF201d52),
-                      )
-                    ],
-                  ),
-                  BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, state) {
-                      if (state is dataLoadingState) {
-                        return Column(
-                          children: [
-                            Center(
-                                child: Container(
-                                    child: CircularProgressIndicator())),
-                          ],
-                        );
-                      }
-                      if (state is dataLoadedState) {
-                        var nowplaying = state.nowplayingmovielist;
+                      ),
+                    ),
+                    Text(
+                      "FilmKu",
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: Color(0xFF201d52),
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Icon(
+                      Icons.notifications_outlined,
+                      color: Color(0xFF201d52),
+                    )
+                  ],
+                ),
+                Container(height: height * 0.55, child: NowShowing()),
+                Container(height: height * 0.5, child: PopularMovies())
 
-                        return Container(
-                            height: height * 0.6,
-                            child: NowShowing(nowplaying));
-                      }
-                      return Container();
-                    },
-                  ),
-                  BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, state) {
-                      if (state is dataLoadedState) {
-                        var popularmovies = state.popularmovielist;
-                        return PopularMovies(popularmovies);
-                      }
-                      return Container();
-                    },
-                  )
-                  // Container(color: Colors.amber, child: PopularMovies())
-                ],
-              ),
+                // Container(color: Colors.amber, child: PopularMovies())
+              ],
             ),
-          )),
-    );
+          ),
+        ));
   }
 }
