@@ -80,16 +80,9 @@ class _PopularMoviesState extends State<PopularMovies> {
     _scrollcontroller.addListener(() {
       setState(() {
         _callnewpage = _scrollcontroller.offset >
-                _scrollcontroller.position.maxScrollExtent - 200
+                _scrollcontroller.position.maxScrollExtent - 10
             ? true
             : false;
-        if (_callnewpage == true) {
-          setState(() {
-            _page = _page + 1;
-
-            //fetchgenres();
-          });
-        }
       });
     });
   }
