@@ -132,14 +132,13 @@ class _PopularMoviesState extends State<PopularMovies> {
                   BlocBuilder<PopularmoviesBloc, PopularmoviesState>(
                     builder: (context, state) {
                       if (state is popularmoviesdataloaded) {
-                        PopularmovieList = state.popularmovies;
                         // print('gag');
 
                         return Container(
                           height: height * 0.34,
                           width: width,
                           child: ListView.builder(
-                              itemCount: PopularmovieList.length,
+                              itemCount: state.popularmovies.length,
                               scrollDirection: Axis.vertical,
                               controller: _scrollcontroller,
                               itemBuilder: (BuildContext context, int index) {
@@ -154,18 +153,20 @@ class _PopularMoviesState extends State<PopularMovies> {
                                   onTap: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            homepage() //Detailspage(
-                                        //   title: widget.PopularmovieList[index].title!,
-                                        //   description:
-                                        //       widget.PopularmovieList[index].overview!,
-                                        //   average_vote: PopularmovieList[index].voteAverage!,
-                                        //   backdroppictures:
-                                        //       PopularmovieList[index].backdropPath!,
-                                        //   poster_path: PopularmovieList[index].posterPath!,
-                                        //   movieindex: index,
-                                        // ),
-                                        ),
+                                      builder: (context) => Detailspage(
+                                        title:
+                                            state.popularmovies[index].title!,
+                                        description: state
+                                            .popularmovies[index].overview!,
+                                        average_vote: state
+                                            .popularmovies[index].voteAverage!,
+                                        backdroppictures: state
+                                            .popularmovies[index].backdropPath!,
+                                        poster_path: state
+                                            .popularmovies[index].posterPath!,
+                                        movieindex: index,
+                                      ),
+                                    ),
                                   ),
                                   child: Row(
                                     crossAxisAlignment:
@@ -182,7 +183,7 @@ class _PopularMoviesState extends State<PopularMovies> {
                                           image: DecorationImage(
                                               image: CachedNetworkImageProvider(
                                                 'https://image.tmdb.org/t/p/w500/' +
-                                                    PopularmovieList[index]
+                                                    state.popularmovies[index]
                                                         .posterPath!,
                                               ),
                                               fit: BoxFit.cover),
@@ -196,7 +197,7 @@ class _PopularMoviesState extends State<PopularMovies> {
                                             height: height * 0.05,
                                             width: width * 0.4,
                                             child: Text(
-                                              PopularmovieList[index].title!,
+                                              state.popularmovies[index].title!,
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   color: Color(0xFF201d52),
@@ -213,7 +214,7 @@ class _PopularMoviesState extends State<PopularMovies> {
                                                 width: 3,
                                               ),
                                               Text(
-                                                  PopularmovieList[index]
+                                                  state.popularmovies[index]
                                                           .voteAverage! +
                                                       "/10",
                                                   style: TextStyle(
@@ -232,10 +233,10 @@ class _PopularMoviesState extends State<PopularMovies> {
                                             margin: EdgeInsets.only(
                                                 top: height * 0.02),
                                             child: ListView.builder(
-                                                itemCount:
-                                                    PopularmovieList[index]
-                                                        .genreIds!
-                                                        .length,
+                                                itemCount: state
+                                                    .popularmovies[index]
+                                                    .genreIds!
+                                                    .length,
                                                 scrollDirection:
                                                     Axis.horizontal,
                                                 itemBuilder:

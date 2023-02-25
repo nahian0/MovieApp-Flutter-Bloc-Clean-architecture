@@ -1,24 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:myapp/core/di/app_component.dart';
 import 'package:myapp/features/details/presentation/pages/DetailsPage.dart';
-import 'package:myapp/features/home/data/datasources/ApiServicesNowShowing.dart';
-import 'package:myapp/features/home/data/models/NowPlayingModel.dart';
-import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import 'package:myapp/features/home/domain/repositories/Home_page_Repositorie.dart';
 import 'package:myapp/features/home/domain/usecases/NowplayinUsecase.dart';
-import 'package:myapp/features/home/domain/usecases/Popularmoviesusecase.dart';
-import 'package:myapp/features/home/presentation/bloc/nowshowingbloc/nowshowing_bloc.dart';
-import 'package:myapp/features/home/presentation/pages/homepage.dart';
-import 'package:myapp/features/home/presentation/pages/splashscreen.dart';
-import 'package:myapp/features/home/presentation/widgets/screensize.dart';
+import 'package:myapp/features/home/domain/usecases/genreslistusecase.dart';
 
-List<NowPlayingMovieModel> NowplayingmovieList = [];
+import 'package:myapp/features/home/presentation/bloc/nowshowingbloc/nowshowing_bloc.dart';
+
+import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 
 int _page = 1;
 
@@ -30,6 +23,8 @@ class NowShowing extends StatefulWidget {
 class _NowShowingState extends State<NowShowing> {
   NowplayingUsecase _nowplayingUsecase =
       NowplayingUsecase(locator<HomePageRepositories>());
+  genreslistusecase _genreslistusecase =
+      genreslistusecase(locator<HomePageRepositories>());
 
   bool _callnewpage = false;
   final ScrollController _scrollcontroller = ScrollController();
@@ -40,7 +35,7 @@ class _NowShowingState extends State<NowShowing> {
     _scrollcontroller.addListener(() {
       setState(() {
         _callnewpage = _scrollcontroller.offset >
-                _scrollcontroller.position.maxScrollExtent - 500
+                _scrollcontroller.position.maxScrollExtent - 10
             ? true
             : false;
         if (_callnewpage == true) {
@@ -56,7 +51,8 @@ class _NowShowingState extends State<NowShowing> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          NowshowingBloc(_nowplayingUsecase)..add(Loadnowplayingdata()),
+          NowshowingBloc(_nowplayingUsecase, _genreslistusecase)
+            ..add(Loadnowplayingdata()),
       child: Scaffold(
         body: Container(
           color: Colors.white,
@@ -91,13 +87,13 @@ class _NowShowingState extends State<NowShowing> {
               BlocBuilder<NowshowingBloc, NowshowingState>(
                 builder: (context, state) {
                   if (state is NowshowingDataLoaded) {
-                    NowplayingmovieList = state.Nowshowingmovies;
+                    print(state.Nowshowingmovies.length);
 
                     return Container(
                       height: height * 0.45,
                       width: width,
                       child: ListView.builder(
-                          itemCount: NowplayingmovieList.length,
+                          itemCount: state.Nowshowingmovies.length,
                           scrollDirection: Axis.horizontal,
                           controller: _scrollcontroller,
                           itemBuilder: (BuildContext context, int index) {
@@ -112,20 +108,22 @@ class _NowShowingState extends State<NowShowing> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          homepage() // Detailspage(
-                                      //   title: NowplayingmovieList[index].title!,
-                                      //   description:
-                                      //       NowplayingmovieList[index].overview!,
-                                      //   average_vote:
-                                      //       NowplayingmovieList[index].voteAverage!,
-                                      //   backdroppictures: NowplayingmovieList[index]
-                                      //       .backdropPath!,
-                                      //   poster_path:
-                                      //       NowplayingmovieList[index].posterPath!,
-                                      //   movieindex: index,
-                                      // ),
-                                      ),
+                                    builder: (context) => Detailspage(
+                                      title:
+                                          state.Nowshowingmovies[index].title!,
+                                      description: state
+                                          .Nowshowingmovies[index].overview!,
+                                      average_vote: state
+                                          .Nowshowingmovies[index].voteAverage!
+                                          .toString(),
+                                      backdroppictures: state
+                                          .Nowshowingmovies[index]
+                                          .backdropPath!,
+                                      poster_path: state
+                                          .Nowshowingmovies[index].posterPath!,
+                                      movieindex: index,
+                                    ),
+                                  ),
                                 );
                               },
                               child: Column(
@@ -137,13 +135,20 @@ class _NowShowingState extends State<NowShowing> {
                                         EdgeInsets.only(left: 10, right: 10),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                          image: CachedNetworkImageProvider(
-                                            'https://image.tmdb.org/t/p/w500/' +
-                                                NowplayingmovieList[index]
-                                                    .posterPath!,
-                                          ),
-                                          fit: BoxFit.cover),
+                                      image: state.Nowshowingmovies[index]
+                                                  .posterPath !=
+                                              null
+                                          ? DecorationImage(
+                                              image: CachedNetworkImageProvider(
+                                                'https://image.tmdb.org/t/p/w500/' +
+                                                    state
+                                                        .Nowshowingmovies[index]
+                                                        .posterPath!,
+                                              ),
+                                              fit: BoxFit.cover)
+                                          : DecorationImage(
+                                              image: AssetImage(
+                                                  'images/matrix.jpg')),
                                     ),
                                   ),
                                   SizedBox(
@@ -155,7 +160,7 @@ class _NowShowingState extends State<NowShowing> {
                                     child: Center(
                                       child: Text(
                                         //movieList[index].title,
-                                        NowplayingmovieList[index].title!,
+                                        state.Nowshowingmovies[index].title!,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 13,
@@ -175,8 +180,9 @@ class _NowShowingState extends State<NowShowing> {
                                         width: 3,
                                       ),
                                       Text(
-                                          NowplayingmovieList[index]
-                                                  .voteAverage! +
+                                          state.Nowshowingmovies[index]
+                                                  .voteAverage
+                                                  .toString() +
                                               "/10",
                                           style: TextStyle(color: Colors.grey)),
                                       SizedBox(

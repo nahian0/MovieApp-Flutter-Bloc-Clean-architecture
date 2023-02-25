@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 
 class NowPlayingMovieModel {
   final String? backdropPath;
-  final int? id;
+  final num? id;
   final String? originalLanguage;
   final String? originalTitle;
   final String? overview;
-  final double? popularity;
+  final num? popularity;
   final String? posterPath;
   final String? releaseDate;
   final String? title;
   final bool? video;
-  final int? voteCount;
-  final String? voteAverage;
+  final num? voteCount;
+  final num? voteAverage;
   final List? genre_ids;
 
   NowPlayingMovieModel(
@@ -45,7 +45,7 @@ class NowPlayingMovieModel {
         title: json['title'],
         video: json['video'],
         voteCount: json['vote_count'],
-        voteAverage: json['vote_average'].toString(),
+        voteAverage: json['vote_average'],
         genre_ids: json['genre_ids']);
   }
 }

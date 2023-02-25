@@ -7,7 +7,7 @@ class PopularMovieModel {
   final String? originalLanguage;
   final String? originalTitle;
   final String? overview;
-  final double? popularity;
+  final num? popularity;
   final String? posterPath;
   final String? releaseDate;
   final String? title;
@@ -17,7 +17,7 @@ class PopularMovieModel {
 
   //String error;
 
-  PopularMovieModel ({
+  PopularMovieModel({
     required this.backdropPath,
     required this.id,
     required this.originalLanguage,
@@ -33,8 +33,8 @@ class PopularMovieModel {
     required this.genreIds,
   });
 
-  factory PopularMovieModel .fromJson(dynamic json) {
-    return PopularMovieModel (
+  factory PopularMovieModel.fromJson(dynamic json) {
+    return PopularMovieModel(
         backdropPath: json['backdrop_path'],
         id: json['id'],
         originalLanguage: json['original_language'],

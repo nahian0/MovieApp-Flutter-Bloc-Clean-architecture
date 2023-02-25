@@ -8,21 +8,21 @@ import 'package:myapp/features/home/domain/usecases/Popularmoviesusecase.dart';
 part 'popularmovies_event.dart';
 part 'popularmovies_state.dart';
 
-List<PopularMovieModel> p = [];
-
 class PopularmoviesBloc extends Bloc<PopularmoviesEvent, PopularmoviesState> {
-  int _page = 1;
+  int page = 1;
 
   PopularMovieUsecase _popularMovieUsecase =
       PopularMovieUsecase(locator<HomePageRepositories>());
 
   PopularmoviesBloc(this._popularMovieUsecase)
       : super(PopularmoviesdataLoading()) {
-    on<PopularmoviesEvent>((event, emit) async {
+    List<PopularMovieModel> p = [];
+    on<loadPopularmoviesdata>((event, emit) async {
       emit(PopularmoviesdataLoading());
       try {
-        p = await _popularMovieUsecase(page: _page);
+        p = await _popularMovieUsecase(page: page);
         print(p);
+        //print('bello');
         emit(popularmoviesdataloaded(p));
       } catch (e) {
         print(e);
@@ -31,10 +31,10 @@ class PopularmoviesBloc extends Bloc<PopularmoviesEvent, PopularmoviesState> {
 
     on<LoadnextpageData>(
       (event, emit) async {
-        print('hello');
-        _page = _page + 1;
+        page = page + 1;
+        print(page);
 
-        p = p + await _popularMovieUsecase(page: _page);
+        p = p + await _popularMovieUsecase(page: page);
         print(p.length);
         emit(popularmoviesdataloaded(p));
       },
