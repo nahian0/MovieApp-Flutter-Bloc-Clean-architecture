@@ -132,7 +132,9 @@ class _PopularMoviesState extends State<PopularMovies> {
                   BlocBuilder<PopularmoviesBloc, PopularmoviesState>(
                     builder: (context, state) {
                       if (state is popularmoviesdataloaded) {
-                        // print('gag');
+                        //print(state.genreslist);
+                        print('gag');
+                        print(state.genreslist[0][0]);
 
                         return Container(
                           height: height * 0.34,
@@ -142,6 +144,7 @@ class _PopularMoviesState extends State<PopularMovies> {
                               scrollDirection: Axis.vertical,
                               controller: _scrollcontroller,
                               itemBuilder: (BuildContext context, int index) {
+                                List tempList = state.genreslist[index];
                                 if (_callnewpage == true) {
                                   context
                                       .read<PopularmoviesBloc>()
@@ -165,6 +168,7 @@ class _PopularMoviesState extends State<PopularMovies> {
                                         poster_path: state
                                             .popularmovies[index].posterPath!,
                                         movieindex: index,
+                                        genreslist: tempList,
                                       ),
                                     ),
                                   ),
@@ -233,86 +237,79 @@ class _PopularMoviesState extends State<PopularMovies> {
                                             margin: EdgeInsets.only(
                                                 top: height * 0.02),
                                             child: ListView.builder(
-                                                itemCount: state
-                                                    .popularmovies[index]
-                                                    .genreIds!
-                                                    .length,
+                                                itemCount: tempList.length,
                                                 scrollDirection:
                                                     Axis.horizontal,
                                                 itemBuilder:
                                                     (BuildContext context,
                                                         int i) {
                                                   return Container(
-                                                    child: showgenres == true
+                                                      child: Container(
+                                                    child: tempList[i]
+                                                                .toString()
+                                                                .length <=
+                                                            10
                                                         ? Container(
-                                                            child: PopularmoviesallgenresList[
-                                                                            index][i]
-                                                                        .toString()
-                                                                        .length <=
-                                                                    10
-                                                                ? Container(
-                                                                    height:
-                                                                        height *
-                                                                            0.035,
-                                                                    width:
-                                                                        width *
-                                                                            0.2,
-                                                                    margin:
-                                                                        EdgeInsets
-                                                                            .only(
-                                                                      right: 10,
-                                                                    ),
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              15),
-                                                                      color: Color.fromARGB(
-                                                                          255,
-                                                                          207,
-                                                                          218,
-                                                                          247),
-                                                                    ),
-                                                                    child: Center(
-                                                                        child: Container(
-                                                                      child: Text(
-                                                                          //
-                                                                          PopularmoviesallgenresList[index][i]),
-                                                                    )),
-                                                                  )
-                                                                : Container(
-                                                                    height:
-                                                                        height *
-                                                                            0.035,
-                                                                    width:
-                                                                        width *
-                                                                            0.3,
-                                                                    margin:
-                                                                        EdgeInsets
-                                                                            .only(
-                                                                      right: 10,
-                                                                    ),
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              15),
-                                                                      color: Color.fromARGB(
-                                                                          255,
-                                                                          207,
-                                                                          218,
-                                                                          247),
-                                                                    ),
-                                                                    child: Center(
-                                                                        child: Container(
-                                                                      child: Text(
-                                                                          //
-                                                                          PopularmoviesallgenresList[index][i]),
-                                                                    )),
-                                                                  ),
+                                                            height:
+                                                                height * 0.035,
+                                                            width: width * 0.2,
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                              right: 10,
+                                                            ),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          15),
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      207,
+                                                                      218,
+                                                                      247),
+                                                            ),
+                                                            child: Center(
+                                                                child:
+                                                                    Container(
+                                                              child: Text(
+                                                                  //
+                                                                  tempList[i]
+                                                                      .toString()),
+                                                            )),
                                                           )
-                                                        : Container(),
-                                                  );
+                                                        : Container(
+                                                            height:
+                                                                height * 0.035,
+                                                            width: width * 0.3,
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                              right: 10,
+                                                            ),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          15),
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      207,
+                                                                      218,
+                                                                      247),
+                                                            ),
+                                                            child: Center(
+                                                                child:
+                                                                    Container(
+                                                              child: Text(
+                                                                  //
+                                                                  tempList[i]
+                                                                      .toString()),
+                                                            )),
+                                                          ),
+                                                  ));
                                                 }),
                                           ),
                                           Row(

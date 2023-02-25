@@ -122,6 +122,7 @@ class _NowShowingState extends State<NowShowing> {
                                       poster_path: state
                                           .Nowshowingmovies[index].posterPath!,
                                       movieindex: index,
+                                      genreslist: [],
                                     ),
                                   ),
                                 );

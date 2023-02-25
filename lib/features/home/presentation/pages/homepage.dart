@@ -34,23 +34,7 @@ class _homepageState extends State<homepage> {
   GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   List<Map<String, dynamic>> _GenreList = [];
 
-  void _LoadGenreList() async {
-    final data = await GenresLocalDb.getGenres();
-    setState(() {
-      _GenreList = data;
-    });
-    print(_GenreList);
-
-    if (_GenreList.length == 0) {
-      for (int i = 0; i < Genrelist.length; i++) {
-        GenresLocalDb.createGenre(Genrelist[i].id!, Genrelist[i].name!);
-      }
-    }
-    print(_GenreList);
-  }
-
   void initState() {
-    _LoadGenreList();
     super.initState();
   }
 

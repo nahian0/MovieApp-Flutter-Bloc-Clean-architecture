@@ -15,6 +15,7 @@ class Detailspage extends StatefulWidget {
   String backdroppictures;
   String poster_path;
   int movieindex;
+  List genreslist;
 
   Detailspage(
       {required this.average_vote,
@@ -22,7 +23,8 @@ class Detailspage extends StatefulWidget {
       required this.title,
       required this.backdroppictures,
       required this.poster_path,
-      required this.movieindex});
+      required this.movieindex,
+      required this.genreslist});
 
   @override
   State<Detailspage> createState() => _DetailspageState();
@@ -186,7 +188,7 @@ class _DetailspageState extends State<Detailspage> {
                     right: width * 0.05,
                     top: height * 0.02),
                 child: ListView.builder(
-                    itemCount: 2,
+                    itemCount: widget.genreslist.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
@@ -201,7 +203,7 @@ class _DetailspageState extends State<Detailspage> {
                         ),
                         child: Center(
                           child: Text(
-                            'aa',
+                            widget.genreslist[index],
                             // PopularmoviesallgenresList[widget.movieindex]
                             //     [index],
                             style: TextStyle(

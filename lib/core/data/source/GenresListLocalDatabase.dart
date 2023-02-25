@@ -20,7 +20,7 @@ class GenresLocalDb {
 //create database and table
   static Future<sql.Database> db() async {
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = join(directory.path, 'Genrelocaldbb.db');
+    String path = join(directory.path, 'Genrelocaldatabasess.db');
     return sql.openDatabase(
       path,
       version: 1,
