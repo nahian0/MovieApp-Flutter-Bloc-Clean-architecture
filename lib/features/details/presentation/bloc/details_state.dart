@@ -1,9 +1,14 @@
 part of 'details_bloc.dart';
 
 abstract class DetailsState extends Equatable {
-  const DetailsState();  
+  const DetailsState();
 
   @override
   List<Object> get props => [];
 }
+
 class DetailsInitial extends DetailsState {}
+
+class moviefound extends DetailsState {}
+
+class movienotfound extends DetailsState {}

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:myapp/features/details/data/repositories/details_repository_impl.dart';
+import 'package:myapp/features/details/domain/repositories/details_repository.dart';
 import 'package:myapp/features/home/data/datasources/ApiServiceGenres.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicePopularMovies.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicesNowShowing.dart';
@@ -15,9 +17,12 @@ class AppComponent extends GetxController {
         () => ApiServicePopularMovies());
     locator.registerFactory<ApiServiceGenresList>(() => ApiServiceGenresList());
 
-    locator.registerFactory<HomePageRepositories>(() => HomePageRepositoryImpl(
-        locator<ApiServiceNowPlaying>(),
-        locator<ApiServicePopularMovies>(),
-        locator<ApiServiceGenresList>()));
+    locator.registerFactory<HomePageRepositories>(
+      () => HomePageRepositoryImpl(locator<ApiServiceNowPlaying>(),
+          locator<ApiServicePopularMovies>(), locator<ApiServiceGenresList>()),
+    );
+    locator.registerFactory<DetailspageRepository>(
+      () => detailReposotoryImpl(),
+    );
   }
 }
