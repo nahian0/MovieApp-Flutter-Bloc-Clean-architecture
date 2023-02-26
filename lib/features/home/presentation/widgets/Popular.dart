@@ -20,7 +20,6 @@ import 'package:myapp/features/home/presentation/pages/splashscreen.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 
 int _page = 1;
-List<PopularMovieModel> PopularmovieList = [];
 
 class PopularMovies extends StatefulWidget {
   // List PopularmovieList;

@@ -16,6 +16,7 @@ class ApiServiceGenresList {
   //     'https://api.themoviedb.org/3/movie/now_playing?api_key=7891436f22ccc147037bfd45c7ed95d5&language=en-US&page=1';
 
   Future<List<Genres_Model>> getGenres() async {
+    List<Genres_Model> Genrelist = [];
     try {
       final _response =
           await _dio.get(baseurl + 'api_key=' + key + '&language=en-US');
