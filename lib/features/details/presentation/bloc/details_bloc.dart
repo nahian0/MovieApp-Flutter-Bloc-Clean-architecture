@@ -50,7 +50,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     on<delatefrombookmark>((event, emit) async {
       delateitemusecase(event.title);
       _item = await getitemusecase(title: event.title);
-      ;
+
       if (_item.length > 0) {
         emit(moviefound());
       } else {

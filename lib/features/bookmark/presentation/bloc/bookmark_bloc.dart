@@ -2,9 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:myapp/core/di/app_component.dart';
 import 'package:myapp/features/bookmark/domain/repositories/bookmarks_Repository.dart';
-import 'package:myapp/features/bookmark/domain/usecases/delateBookmarkitem.dart';
-
-import 'package:myapp/features/bookmark/domain/usecases/getBookmarksdata.dart';
+import 'package:myapp/features/bookmark/domain/usecases/delateBookmarkusecase.dart';
+import 'package:myapp/features/bookmark/domain/usecases/getBookmarksdatausecase.dart';
 
 part 'bookmark_event.dart';
 part 'bookmark_state.dart';

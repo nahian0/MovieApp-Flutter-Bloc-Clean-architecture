@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/core/di/app_component.dart';
 import 'package:myapp/features/bookmark/domain/repositories/bookmarks_Repository.dart';
 
-import 'package:myapp/features/bookmark/domain/usecases/getBookmarksdata.dart';
+import 'package:myapp/features/bookmark/domain/usecases/getBookmarksdatausecase.dart';
 import 'package:myapp/features/bookmark/presentation/bloc/bookmark_bloc.dart';
 import 'package:myapp/features/home/presentation/bloc/nowshowingbloc/nowshowing_bloc.dart';
 import 'package:myapp/features/home/presentation/widgets/Navbar.dart';

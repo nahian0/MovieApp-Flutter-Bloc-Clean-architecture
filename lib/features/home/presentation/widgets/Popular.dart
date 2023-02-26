@@ -44,9 +44,9 @@ class _PopularMoviesState extends State<PopularMovies> {
   //   () => 'Data Loaded',
   // );
 
-  Future<void> getgenresfromlocaldb(int len) async {
-    int i = 0;
-  }
+  // Future<void> getgenresfromlocaldb(int len) async {
+  //   int i = 0;
+  // }
 
   // void fetchgenres() async {
   //   List _tempgenreList = [];
@@ -74,9 +74,6 @@ class _PopularMoviesState extends State<PopularMovies> {
   // }
 
   void initState() {
-    getgenresfromlocaldb(0);
-    //fetchgenres();
-
     _scrollcontroller.addListener(() {
       setState(() {
         _callnewpage = _scrollcontroller.offset >
