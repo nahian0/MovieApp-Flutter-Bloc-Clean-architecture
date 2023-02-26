@@ -33,7 +33,6 @@ class PopularMovies extends StatefulWidget {
 class _PopularMoviesState extends State<PopularMovies> {
   final ScrollController _scrollcontroller = ScrollController();
 
-  bool showgenres = false;
   bool _callnewpage = false;
   PopularMovieUsecase _popularMovieUsecase =
       PopularMovieUsecase(locator<HomePageRepositories>());
