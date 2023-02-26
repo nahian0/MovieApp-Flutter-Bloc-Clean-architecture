@@ -10,7 +10,7 @@ class detailReposotoryImpl extends DetailspageRepository {
   }
 
   @override
-  Future<int> creatitem(String title, String Description, String Vote_Average,
+  Future<int> createitem(String title, String Description, String Vote_Average,
       String Poster_path) async {
     final response = await BookmarkLocalDb.createItem(
         title, Description, Vote_Average, Poster_path);

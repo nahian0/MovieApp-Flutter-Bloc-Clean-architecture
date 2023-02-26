@@ -66,7 +66,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
               BlocBuilder<BookmarkBloc, BookmarkState>(
                 builder: (context, state) {
                   if (state is bookmarkDataloaded) {
-                    print(state.bookmarks);
+                    //print(state.bookmarks);
                     return Container(
                       height: height * 0.9,
                       child: ListView.builder(
