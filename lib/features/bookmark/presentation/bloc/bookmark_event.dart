@@ -6,3 +6,12 @@ abstract class BookmarkEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class loadBookmarksdata extends BookmarkEvent {}
+
+class delateBookmarkdata extends BookmarkEvent {
+  int id;
+  delateBookmarkdata(this.id);
+  @override
+  List<Object> get props => [id];
+}

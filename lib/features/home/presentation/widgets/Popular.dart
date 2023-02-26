@@ -133,8 +133,8 @@ class _PopularMoviesState extends State<PopularMovies> {
                     builder: (context, state) {
                       if (state is popularmoviesdataloaded) {
                         //print(state.genreslist);
-                        print('gag');
-                        print(state.genreslist[0][0]);
+                        //print('gag');
+                        //print(state.genreslist[0][0]);
 
                         return Container(
                           height: height * 0.34,

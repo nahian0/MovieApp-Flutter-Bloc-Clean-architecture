@@ -22,6 +22,5 @@ class detailReposotoryImpl extends DetailspageRepository {
   Future<int> Delateitem(String title) async {
     await BookmarkLocalDb.deleteItembytitle(title);
     return 0;
-    throw UnimplementedError();
   }
 }

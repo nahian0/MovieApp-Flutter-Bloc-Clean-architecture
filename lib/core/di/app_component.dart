@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:myapp/features/bookmark/data/repositories/bookmarks_repository_impl.dart';
+import 'package:myapp/features/bookmark/domain/repositories/bookmarks_Repository.dart';
 import 'package:myapp/features/details/data/repositories/details_repository_impl.dart';
 import 'package:myapp/features/details/domain/repositories/details_repository.dart';
 import 'package:myapp/features/home/data/datasources/ApiServiceGenres.dart';
@@ -23,6 +25,10 @@ class AppComponent extends GetxController {
     );
     locator.registerFactory<DetailspageRepository>(
       () => detailReposotoryImpl(),
+    );
+
+    locator.registerFactory<BookmarksRepository>(
+      () => BookmarkRepositoryImpl(),
     );
   }
 }
