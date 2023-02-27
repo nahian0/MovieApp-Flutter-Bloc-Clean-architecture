@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/core/di/app_component.dart';
+import 'package:myapp/dependency_injection.dart';
 import 'package:myapp/features/details/presentation/pages/DetailsPage.dart';
 import 'package:myapp/features/home/domain/repositories/Home_page_Repositorie.dart';
 import 'package:myapp/features/home/domain/usecases/NowplayinUsecase.dart';
@@ -19,9 +20,9 @@ class NowShowing extends StatefulWidget {
 
 class _NowShowingState extends State<NowShowing> {
   NowplayingUsecase _nowplayingUsecase =
-      NowplayingUsecase(locator<HomePageRepositories>());
+      NowplayingUsecase(sl<HomePageRepositories>());
   Genreslistusecase _genreslistusecase =
-      Genreslistusecase(locator<HomePageRepositories>());
+      Genreslistusecase(sl<HomePageRepositories>());
 
   bool _callnewpage = false;
   final ScrollController _scrollcontroller = ScrollController();

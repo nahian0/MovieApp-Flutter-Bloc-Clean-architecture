@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:myapp/core/di/app_component.dart';
+import 'package:myapp/dependency_injection.dart';
 import 'package:myapp/features/bookmark/domain/repositories/bookmarks_Repository.dart';
 import 'package:myapp/features/bookmark/domain/usecases/delateBookmarkusecase.dart';
 import 'package:myapp/features/bookmark/domain/usecases/getBookmarksdatausecase.dart';
@@ -10,10 +11,10 @@ part 'bookmark_state.dart';
 
 class BookmarkBloc extends Bloc<BookmarkEvent, BookmarkState> {
   BookmarkBloc() : super(BookmarkInitial()) {
-    GetBookmarksdatausecase getBookmarksdatausecase = GetBookmarksdatausecase(
-        bookmarksRepository: locator<BookmarksRepository>());
-    DelateBookmarksusecase delateBookmarksusecase = DelateBookmarksusecase(
-        bookmarksRepository: locator<BookmarksRepository>());
+    GetBookmarksdatausecase getBookmarksdatausecase =
+        GetBookmarksdatausecase(bookmarksRepository: sl<BookmarksRepository>());
+    DelateBookmarksusecase delateBookmarksusecase =
+        DelateBookmarksusecase(bookmarksRepository: sl<BookmarksRepository>());
     List<Map<String, dynamic>> _bookmarks = [];
 
     on<loadBookmarksdata>((event, emit) async {

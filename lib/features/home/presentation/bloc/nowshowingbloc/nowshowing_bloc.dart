@@ -14,12 +14,10 @@ part 'nowshowing_state.dart';
 
 class NowshowingBloc extends Bloc<NowshowingEvent, NowshowingState> {
   int page = 1;
-  NowplayingUsecase _nowplayingUsecase =
-      NowplayingUsecase(locator<HomePageRepositories>());
-  Genreslistusecase _genreslistusecase =
-      Genreslistusecase(locator<HomePageRepositories>());
+  final NowplayingUsecase nowplayingUsecase;
+  final Genreslistusecase genreslistusecase;
 
-  NowshowingBloc(this._nowplayingUsecase, this._genreslistusecase)
+  NowshowingBloc(this.nowplayingUsecase, this.genreslistusecase)
       : super(NowshowingDataLoading()) {
     List<NowPlayingMovieModel> nowplaying = [];
     List<Genres_Model> genres = [];
@@ -27,9 +25,9 @@ class NowshowingBloc extends Bloc<NowshowingEvent, NowshowingState> {
       (event, emit) async {
         emit(NowshowingDataLoading());
         try {
-          nowplaying = await _nowplayingUsecase(page: page);
+          nowplaying = await nowplayingUsecase(page: page);
           //print(nowplaying);
-          genres = await _genreslistusecase();
+          genres = await genreslistusecase();
           List data = await GenresLocalDb.getGenres();
           // print(data.length);
 
@@ -50,7 +48,7 @@ class NowshowingBloc extends Bloc<NowshowingEvent, NowshowingState> {
       (event, emit) async {
         page = page + 1;
         print(page);
-        nowplaying = nowplaying + await _nowplayingUsecase(page: page);
+        nowplaying = nowplaying + await nowplayingUsecase(page: page);
         emit(NowshowingDataLoaded(nowplaying));
       },
     );

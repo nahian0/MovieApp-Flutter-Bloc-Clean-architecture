@@ -12,17 +12,16 @@ part 'popularmovies_state.dart';
 class PopularmoviesBloc extends Bloc<PopularmoviesEvent, PopularmoviesState> {
   int page = 1;
 
-  PopularMovieUsecase _popularMovieUsecase =
-      PopularMovieUsecase(locator<HomePageRepositories>());
+  PopularMovieUsecase popularMovieUsecase;
 
-  PopularmoviesBloc(this._popularMovieUsecase)
+  PopularmoviesBloc(this.popularMovieUsecase)
       : super(PopularmoviesdataLoading()) {
     List<PopularMovieModel> p = [];
     List genreslist = [];
     on<loadPopularmoviesdata>((event, emit) async {
       emit(PopularmoviesdataLoading());
       try {
-        p = await _popularMovieUsecase(page: page);
+        p = await popularMovieUsecase(page: page);
         // print(p);
 
         List _tempgenreList = [];
@@ -51,7 +50,7 @@ class PopularmoviesBloc extends Bloc<PopularmoviesEvent, PopularmoviesState> {
         page = page + 1;
         //print(page);
 
-        p = p + await _popularMovieUsecase(page: page);
+        p = p + await popularMovieUsecase(page: page);
         //print(p.length);
 
         List _tempgenreList = [];

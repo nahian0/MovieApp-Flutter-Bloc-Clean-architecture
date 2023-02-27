@@ -7,14 +7,14 @@ import 'package:myapp/features/home/data/models/NowPlayingModel.dart';
 import 'package:myapp/features/home/data/models/PopularModel.dart';
 
 abstract class HomePageRepositories {
-  final ApiServiceNowPlaying nowplayingapi;
-  final ApiServicePopularMovies popularapi;
-  ApiServiceGenresList genresapi;
-  HomePageRepositories(
-    this.nowplayingapi,
-    this.popularapi,
-    this.genresapi,
-  );
+  // final ApiServiceNowPlaying nowPlayingapi;
+  // final ApiServicePopularMovies popularApi;
+  // ApiServiceGenresList genresApi;
+  // HomePageRepositories(
+  //   this.nowPlayingapi,
+  //   this.popularApi,
+  //   this.genresApi,
+  // );
   Future<List<NowPlayingMovieModel>> getNowPlayingMovie(int page);
   Future<List<PopularMovieModel>> getpopularmovies(int page);
   Future<List<Genres_Model>> getGenres();

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:myapp/core/di/app_component.dart';
 import 'package:myapp/features/home/presentation/pages/homepage.dart';
+import 'package:myapp/dependency_injection.dart';
 
 void main() {
-  AppComponent().init();
+  //AppComponent().init();
+  init();
   runApp(const MyApp());
 }
 
@@ -21,9 +23,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: HomePage(),
-      onInit: () {
-        Get.put(AppComponent());
-      },
+      // onInit: () {
+      //   Get.put(AppComponent());
+      // },
     );
   }
 }

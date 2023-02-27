@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:myapp/core/data/source/bookmarkLocalDatabase.dart';
 import 'package:myapp/core/di/app_component.dart';
+import 'package:myapp/dependency_injection.dart';
 import 'package:myapp/features/details/data/repositories/details_repository_impl.dart';
 import 'package:myapp/features/details/domain/repositories/details_repository.dart';
 import 'package:myapp/features/details/domain/usecases/Createitemusecase.dart';
@@ -18,13 +19,13 @@ part 'details_state.dart';
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   DetailsBloc() : super(DetailsInitial()) {
     Getitemusecase getitemusecase =
-        Getitemusecase(detailspageRepository: locator<DetailspageRepository>());
+        Getitemusecase(detailspageRepository: sl<DetailspageRepository>());
 
-    Createitemusecase createitemusecase = Createitemusecase(
-        detailspageRepository: locator<DetailspageRepository>());
+    Createitemusecase createitemusecase =
+        Createitemusecase(detailspageRepository: sl<DetailspageRepository>());
 
-    Delateitemusecase delateitemusecase = Delateitemusecase(
-        detailspageRepository: locator<DetailspageRepository>());
+    Delateitemusecase delateitemusecase =
+        Delateitemusecase(detailspageRepository: sl<DetailspageRepository>());
 
     List<Map<String, dynamic>> _item = [];
     on<findmovie>((event, emit) async {
