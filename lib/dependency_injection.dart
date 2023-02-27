@@ -31,6 +31,7 @@ Future<void> init() async {
     ),
   );
 
+//bloc
   sl.registerFactory(() => NowshowingBloc(
         sl(),
         sl(),
