@@ -1,8 +1,8 @@
 import 'package:myapp/features/home/data/models/GenresModel.dart';
 import 'package:myapp/features/home/domain/usecases/homepageusecase.dart';
 
-class genreslistusecase extends HomepageUsecase {
-  genreslistusecase(super.homePageRepositories);
+class Genreslistusecase extends HomepageUsecase {
+  Genreslistusecase(super.homePageRepositories);
   Future<List<Genres_Model>> call() async {
     var response = await homePageRepositories.getGenres();
     return response;

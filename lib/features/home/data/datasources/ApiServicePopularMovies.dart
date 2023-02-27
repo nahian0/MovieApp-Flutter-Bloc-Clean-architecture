@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:myapp/features/home/data/models/PopularModel.dart';
+import 'package:myapp/features/home/data/models/testmodel.dart';
 import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import 'package:myapp/features/home/presentation/widgets/Popular.dart';
 
@@ -24,6 +25,8 @@ class ApiServicePopularMovies {
           page.toString());
       var Popularmovies = response1.data['results'] as List;
       var p = Popularmovies.map((m) => PopularMovieModel.fromJson(m)).toList();
+      // print('hello');
+      // print(p.length);
 
       // for (int i = 0; i < p[0].genreIds!.length;i++){
 
@@ -46,6 +49,8 @@ class ApiServicePopularMovies {
 
       //   PopularmoviesallgenresList.add(_tempgenre);
       // }
+      print('here');
+      print(p[0].genre_ids);
 
       PopularmovieList = PopularmovieList + p;
       //print(allgenres);

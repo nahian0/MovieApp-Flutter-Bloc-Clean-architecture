@@ -12,6 +12,7 @@ class PopularmoviesdataLoading extends PopularmoviesState {}
 
 class popularmoviesdataloaded extends PopularmoviesState {
   final List<PopularMovieModel> popularmovies;
+
   final List genreslist;
 
   popularmoviesdataloaded(

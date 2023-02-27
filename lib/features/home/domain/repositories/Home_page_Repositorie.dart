@@ -5,6 +5,7 @@ import 'package:myapp/features/home/data/datasources/ApiServicesNowShowing.dart'
 import 'package:myapp/features/home/data/models/GenresModel.dart';
 import 'package:myapp/features/home/data/models/NowPlayingModel.dart';
 import 'package:myapp/features/home/data/models/PopularModel.dart';
+import 'package:myapp/features/home/data/models/testmodel.dart';
 
 abstract class HomePageRepositories {
   final ApiServiceNowPlaying nowplayingapi;

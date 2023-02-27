@@ -4,6 +4,7 @@ import 'package:myapp/features/home/data/models/GenresModel.dart';
 import 'package:myapp/features/home/data/models/NowPlayingModel.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicesNowShowing.dart';
 import 'package:myapp/features/home/data/models/PopularModel.dart';
+import 'package:myapp/features/home/data/models/testmodel.dart';
 import 'package:myapp/features/home/domain/repositories/Home_page_Repositorie.dart';
 
 class HomePageRepositoryImpl extends HomePageRepositories {
@@ -21,6 +22,7 @@ class HomePageRepositoryImpl extends HomePageRepositories {
   Future<List<PopularMovieModel>> getpopularmovies(int page) async {
     List<PopularMovieModel> apiResponse =
         await popularapi.getPopularMovie(page);
+    //print(apiResponse);
     return apiResponse;
   }
 

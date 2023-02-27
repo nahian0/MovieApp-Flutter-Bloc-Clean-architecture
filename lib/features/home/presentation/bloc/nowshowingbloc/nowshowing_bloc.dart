@@ -16,8 +16,8 @@ class NowshowingBloc extends Bloc<NowshowingEvent, NowshowingState> {
   int page = 1;
   NowplayingUsecase _nowplayingUsecase =
       NowplayingUsecase(locator<HomePageRepositories>());
-  genreslistusecase _genreslistusecase =
-      genreslistusecase(locator<HomePageRepositories>());
+  Genreslistusecase _genreslistusecase =
+      Genreslistusecase(locator<HomePageRepositories>());
 
   NowshowingBloc(this._nowplayingUsecase, this._genreslistusecase)
       : super(NowshowingDataLoading()) {

@@ -23,8 +23,8 @@ class NowShowing extends StatefulWidget {
 class _NowShowingState extends State<NowShowing> {
   NowplayingUsecase _nowplayingUsecase =
       NowplayingUsecase(locator<HomePageRepositories>());
-  genreslistusecase _genreslistusecase =
-      genreslistusecase(locator<HomePageRepositories>());
+  Genreslistusecase _genreslistusecase =
+      Genreslistusecase(locator<HomePageRepositories>());
 
   bool _callnewpage = false;
   final ScrollController _scrollcontroller = ScrollController();

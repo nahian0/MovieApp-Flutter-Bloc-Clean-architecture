@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:myapp/core/data/source/GenresListLocalDatabase.dart';
 import 'package:myapp/core/di/app_component.dart';
 import 'package:myapp/features/home/data/models/PopularModel.dart';
+import 'package:myapp/features/home/data/models/testmodel.dart';
 import 'package:myapp/features/home/domain/repositories/Home_page_Repositorie.dart';
 import 'package:myapp/features/home/domain/usecases/Popularmoviesusecase.dart';
 
@@ -23,13 +24,14 @@ class PopularmoviesBloc extends Bloc<PopularmoviesEvent, PopularmoviesState> {
       emit(PopularmoviesdataLoading());
       try {
         p = await _popularMovieUsecase(page: page);
-        print(p);
+        // print(p);
+
         List _tempgenreList = [];
         for (int i = 0; i < p.length; i++) {
           List _tempgenre = [];
 
-          for (int j = 0; j < p[i].genreIds!.length; j++) {
-            final _id = p[i].genreIds![j];
+          for (int j = 0; j < p[i].genre_ids!.length; j++) {
+            final _id = p[i].genre_ids![j];
             final _gen = await GenresLocalDb.getGenre(_id);
             _tempgenre.add(_gen[0]['name']);
           }
@@ -48,17 +50,17 @@ class PopularmoviesBloc extends Bloc<PopularmoviesEvent, PopularmoviesState> {
     on<LoadnextpageData>(
       (event, emit) async {
         page = page + 1;
-        print(page);
+        //print(page);
 
         p = p + await _popularMovieUsecase(page: page);
-        print(p.length);
+        //print(p.length);
 
         List _tempgenreList = [];
         for (int i = genreslist.length; i < p.length; i++) {
           List _tempgenre = [];
 
-          for (int j = 0; j < p[i].genreIds!.length; j++) {
-            final _id = p[i].genreIds![j];
+          for (int j = 0; j < p[i].genre_ids!.length; j++) {
+            final _id = p[i].genre_ids![j];
             final _gen = await GenresLocalDb.getGenre(_id);
             _tempgenre.add(_gen[0]['name']);
           }
@@ -67,8 +69,8 @@ class PopularmoviesBloc extends Bloc<PopularmoviesEvent, PopularmoviesState> {
           // print(_tempgenreList.length);
         }
         genreslist = genreslist + _tempgenreList;
-        print('genres length');
-        print(genreslist.length);
+        // print('genres length');
+        // print(genreslist.length);
         emit(popularmoviesdataloaded(p, genreslist));
       },
     );
