@@ -2,15 +2,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:myapp/core/di/app_component.dart';
 import 'package:myapp/features/details/presentation/pages/DetailsPage.dart';
 import 'package:myapp/features/home/domain/repositories/Home_page_Repositorie.dart';
 import 'package:myapp/features/home/domain/usecases/NowplayinUsecase.dart';
 import 'package:myapp/features/home/domain/usecases/genreslistusecase.dart';
-
 import 'package:myapp/features/home/presentation/bloc/nowshowingbloc/nowshowing_bloc.dart';
-
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 
 int _page = 1;

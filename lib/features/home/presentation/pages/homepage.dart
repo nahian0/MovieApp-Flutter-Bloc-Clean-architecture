@@ -23,7 +23,7 @@ class _HomePage extends State<HomePage> {
 
   void initState() {
     _scrollcontroller.addListener(() {
-      print(_scrollcontroller.offset);
+      //print(_scrollcontroller.offset);
       setState(() {
         _callnewpage = _scrollcontroller.offset >
                 _scrollcontroller.position.maxScrollExtent - 10

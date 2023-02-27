@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:myapp/core/data/source/GenresListLocalDatabase.dart';
 import 'package:myapp/core/di/app_component.dart';
 import 'package:myapp/features/home/data/models/PopularModel.dart';
-import 'package:myapp/features/home/data/models/testmodel.dart';
 import 'package:myapp/features/home/domain/repositories/Home_page_Repositorie.dart';
 import 'package:myapp/features/home/domain/usecases/Popularmoviesusecase.dart';
 

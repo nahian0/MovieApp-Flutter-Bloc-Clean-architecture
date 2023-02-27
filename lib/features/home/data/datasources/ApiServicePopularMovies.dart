@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:myapp/features/home/data/models/PopularModel.dart';
-import 'package:myapp/features/home/data/models/testmodel.dart';
+
 import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import 'package:myapp/features/home/presentation/widgets/Popular.dart';
 

@@ -4,7 +4,7 @@ import 'package:myapp/features/home/data/models/GenresModel.dart';
 import 'package:myapp/features/home/data/models/NowPlayingModel.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicesNowShowing.dart';
 import 'package:myapp/features/home/data/models/PopularModel.dart';
-import 'package:myapp/features/home/data/models/testmodel.dart';
+
 import 'package:myapp/features/home/domain/repositories/Home_page_Repositorie.dart';
 
 class HomePageRepositoryImpl extends HomePageRepositories {
