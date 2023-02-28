@@ -7,8 +7,10 @@ import 'package:myapp/features/home/data/datasources/ApiServiceGenres.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicePopularMovies.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicesNowShowing.dart';
 import 'package:myapp/features/home/data/models/NowPlayingModel.dart';
+import 'package:myapp/features/home/data/models/PopularModel.dart';
 import 'package:myapp/features/home/data/repositories/Home_Page_Repositorie_Impl.dart';
 import 'package:myapp/features/home/domain/usecases/NowplayinUsecase.dart';
+import 'package:myapp/features/home/domain/usecases/Popularmoviesusecase.dart';
 import 'package:myapp/features/home/domain/usecases/genreslistusecase.dart';
 import 'package:myapp/features/home/presentation/bloc/nowshowingbloc/nowshowing_bloc.dart';
 
@@ -30,7 +32,11 @@ Future<void> init() async {
       sl(),
     ),
   );
-
+  sl.registerLazySingleton(
+    () => PopularMovieUsecase(
+      sl(),
+    ),
+  );
 //bloc
   sl.registerFactory(() => NowshowingBloc(
         sl(),

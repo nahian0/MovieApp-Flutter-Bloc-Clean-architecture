@@ -19,10 +19,8 @@ class NowShowing extends StatefulWidget {
 }
 
 class _NowShowingState extends State<NowShowing> {
-  NowplayingUsecase _nowplayingUsecase =
-      NowplayingUsecase(sl<HomePageRepositories>());
-  Genreslistusecase _genreslistusecase =
-      Genreslistusecase(sl<HomePageRepositories>());
+  NowplayingUsecase _nowplayingUsecase = sl<NowplayingUsecase>();
+  Genreslistusecase _genreslistusecase = sl<Genreslistusecase>();
 
   bool _callnewpage = false;
   final ScrollController _scrollcontroller = ScrollController();
@@ -115,10 +113,12 @@ class _NowShowingState extends State<NowShowing> {
                                           .Nowshowingmovies[index].voteAverage!
                                           .toString(),
                                       backdroppictures: state
-                                          .Nowshowingmovies[index]
-                                          .backdropPath!,
-                                      poster_path: state
-                                          .Nowshowingmovies[index].posterPath!,
+                                              .Nowshowingmovies[index]
+                                              .backdropPath ??
+                                          '',
+                                      poster_path: state.Nowshowingmovies[index]
+                                              .posterPath ??
+                                          '',
                                       movieindex: index,
                                       genreslist: [],
                                     ),
