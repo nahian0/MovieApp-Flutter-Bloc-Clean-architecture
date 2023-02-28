@@ -4,6 +4,6 @@ class DelateBookmarksusecase extends bookmarkusecase {
   DelateBookmarksusecase({required super.bookmarksRepository});
   call(int id) async {
     print(id);
-    await bookmarksRepository.Delateitem(id);
+    await bookmarksRepository.delateItem(id);
   }
 }

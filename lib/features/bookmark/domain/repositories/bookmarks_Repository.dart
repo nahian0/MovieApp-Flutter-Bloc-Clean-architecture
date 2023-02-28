@@ -1,4 +1,4 @@
 abstract class BookmarksRepository {
-  Future<List> getitems();
-  Future<int> Delateitem(int id);
+  Future<List> getItems();
+  Future<int> delateItem(int id);
 }

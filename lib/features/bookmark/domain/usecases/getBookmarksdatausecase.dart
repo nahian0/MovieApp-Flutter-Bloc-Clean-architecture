@@ -5,7 +5,7 @@ class GetBookmarksdatausecase extends bookmarkusecase {
   GetBookmarksdatausecase({required super.bookmarksRepository});
 
   Future call() async {
-    var response = await bookmarksRepository.getitems();
+    var response = await bookmarksRepository.getItems();
     return response;
   }
 }
