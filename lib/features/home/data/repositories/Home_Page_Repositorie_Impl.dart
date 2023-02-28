@@ -29,7 +29,7 @@ class HomePageRepositoryImpl extends HomePageRepositories {
   }
 
   @override
-  Future<List<PopularMovieModel>> getpopularmovies(int page) async {
+  Future<List<PopularMovieModel>> getPopularmovies(int page) async {
     List<PopularMovieModel> apiResponse =
         await popularApi.getPopularMovie(page);
     //print(apiResponse);
@@ -37,8 +37,8 @@ class HomePageRepositoryImpl extends HomePageRepositories {
   }
 
   @override
-  Future<List<Genres_Model>> getGenres() async {
-    List<Genres_Model> apiResponse = await genresApi.getGenres();
+  Future<List<GenresModel>> getGenres() async {
+    List<GenresModel> apiResponse = await genresApi.getGenres();
     return apiResponse;
   }
 }

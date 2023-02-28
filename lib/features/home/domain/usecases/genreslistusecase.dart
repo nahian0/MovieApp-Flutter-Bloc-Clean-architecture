@@ -3,7 +3,7 @@ import 'package:myapp/features/home/domain/usecases/homepageusecase.dart';
 
 class Genreslistusecase extends HomepageUsecase {
   Genreslistusecase(super.homePageRepositories);
-  Future<List<Genres_Model>> call() async {
+  Future<List<GenresModel>> call() async {
     var response = await homePageRepositories.getGenres();
     return response;
   }

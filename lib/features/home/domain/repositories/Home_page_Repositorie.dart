@@ -16,6 +16,6 @@ abstract class HomePageRepositories {
   //   this.genresApi,
   // );
   Future<List<NowPlayingMovieModel>> getNowPlayingMovie(int page);
-  Future<List<PopularMovieModel>> getpopularmovies(int page);
-  Future<List<Genres_Model>> getGenres();
+  Future<List<PopularMovieModel>> getPopularmovies(int page);
+  Future<List<GenresModel>> getGenres();
 }

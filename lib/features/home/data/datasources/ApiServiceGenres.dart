@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:myapp/features/home/data/models/GenresModel.dart';
 import 'package:myapp/features/home/data/models/PopularModel.dart';
-import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import '../models/NowPlayingModel.dart';
 
 class ApiServiceGenresList {
@@ -15,13 +14,13 @@ class ApiServiceGenresList {
   // final String PopularUrl =
   //     'https://api.themoviedb.org/3/movie/now_playing?api_key=7891436f22ccc147037bfd45c7ed95d5&language=en-US&page=1';
 
-  Future<List<Genres_Model>> getGenres() async {
-    List<Genres_Model> Genrelist = [];
+  Future<List<GenresModel>> getGenres() async {
+    List<GenresModel> Genrelist = [];
     try {
       final _response =
           await _dio.get(baseurl + 'api_key=' + key + '&language=en-US');
       var genres = _response.data['genres'] as List;
-      Genrelist = genres.map((m) => Genres_Model.fromJson(m)).toList();
+      Genrelist = genres.map((m) => GenresModel.fromJson(m)).toList();
 
       return Genrelist;
     } catch (error, stacktrace) {

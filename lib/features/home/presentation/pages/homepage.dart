@@ -1,18 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:myapp/core/di/app_component.dart';
 import 'package:myapp/dependency_injection.dart';
 import 'package:myapp/features/details/presentation/pages/DetailsPage.dart';
-import 'package:myapp/features/home/domain/repositories/Home_page_Repositorie.dart';
-import 'package:myapp/features/home/domain/usecases/NowplayinUsecase.dart';
 import 'package:myapp/features/home/domain/usecases/Popularmoviesusecase.dart';
-import 'package:myapp/features/home/domain/usecases/genreslistusecase.dart';
 import 'package:myapp/features/home/presentation/bloc/popularmoviesbloc/popularmovies_bloc.dart';
 import 'package:myapp/features/home/presentation/widgets/Navbar.dart';
 import 'package:myapp/features/home/presentation/widgets/NowShowing.dart';
-import 'package:myapp/features/home/presentation/widgets/Popular.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,7 +22,7 @@ class _HomePage extends State<HomePage> {
 
   void initState() {
     _scrollcontroller.addListener(() {
-      print(_scrollcontroller.offset);
+      //print(_scrollcontroller.offset);
       setState(() {
         _callnewpage = _scrollcontroller.offset >
                 _scrollcontroller.position.maxScrollExtent - 10

@@ -4,7 +4,6 @@ import 'package:myapp/core/data/source/GenresListLocalDatabase.dart';
 import 'package:myapp/core/di/app_component.dart';
 import 'package:myapp/features/home/data/models/GenresModel.dart';
 import 'package:myapp/features/home/data/models/NowPlayingModel.dart';
-import 'package:myapp/features/home/data/repositories/RetrivedData.dart';
 import 'package:myapp/features/home/domain/repositories/Home_page_Repositorie.dart';
 import 'package:myapp/features/home/domain/usecases/NowplayinUsecase.dart';
 import 'package:myapp/features/home/domain/usecases/genreslistusecase.dart';
@@ -20,7 +19,7 @@ class NowshowingBloc extends Bloc<NowshowingEvent, NowshowingState> {
   NowshowingBloc(this.nowplayingUsecase, this.genreslistusecase)
       : super(NowshowingDataLoading()) {
     List<NowPlayingMovieModel> nowplaying = [];
-    List<Genres_Model> genres = [];
+    List<GenresModel> genres = [];
     on<Loadnowplayingdata>(
       (event, emit) async {
         emit(NowshowingDataLoading());

@@ -17,19 +17,16 @@ part 'details_event.dart';
 part 'details_state.dart';
 
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
+  final Getitemusecase getitemUsecase = sl<Getitemusecase>();
+
+  final Createitemusecase createitemUsecase = sl<Createitemusecase>();
+
+  final Delateitemusecase delateitemUsecase = sl<Delateitemusecase>();
+
   DetailsBloc() : super(DetailsInitial()) {
-    Getitemusecase getitemusecase =
-        Getitemusecase(detailspageRepository: sl<DetailspageRepository>());
-
-    Createitemusecase createitemusecase =
-        Createitemusecase(detailspageRepository: sl<DetailspageRepository>());
-
-    Delateitemusecase delateitemusecase =
-        Delateitemusecase(detailspageRepository: sl<DetailspageRepository>());
-
     List<Map<String, dynamic>> _item = [];
     on<findmovie>((event, emit) async {
-      _item = await getitemusecase(title: event.title);
+      _item = await getitemUsecase(title: event.title);
       if (_item.length > 0) {
         emit(moviefound());
       } else {
@@ -38,9 +35,9 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     });
 
     on<addtobookmark>((event, emit) async {
-      await createitemusecase(event.title, event.Description,
+      await createitemUsecase(event.title, event.Description,
           event.Vote_Average, event.Poster_path);
-      _item = await getitemusecase(title: event.title);
+      _item = await getitemUsecase(title: event.title);
       if (_item.length > 0) {
         emit(moviefound());
       } else {
@@ -49,8 +46,8 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     });
 
     on<delatefrombookmark>((event, emit) async {
-      delateitemusecase(event.title);
-      _item = await getitemusecase(title: event.title);
+      delateitemUsecase(event.title);
+      _item = await getitemUsecase(title: event.title);
 
       if (_item.length > 0) {
         emit(moviefound());

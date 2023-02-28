@@ -1,13 +1,15 @@
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myapp/features/bookmark/data/repositories/bookmarks_repository_impl.dart';
 import 'package:myapp/features/bookmark/domain/repositories/bookmarks_Repository.dart';
+import 'package:myapp/features/bookmark/domain/usecases/delateBookmarkusecase.dart';
+import 'package:myapp/features/bookmark/domain/usecases/getBookmarksdatausecase.dart';
 import 'package:myapp/features/details/domain/repositories/details_repository.dart';
+import 'package:myapp/features/details/domain/usecases/Createitemusecase.dart';
+import 'package:myapp/features/details/domain/usecases/delateitemusecase.dart';
+import 'package:myapp/features/details/domain/usecases/getItemusecase.dart';
 import 'package:myapp/features/home/data/datasources/ApiServiceGenres.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicePopularMovies.dart';
 import 'package:myapp/features/home/data/datasources/ApiServicesNowShowing.dart';
-import 'package:myapp/features/home/data/models/NowPlayingModel.dart';
-import 'package:myapp/features/home/data/models/PopularModel.dart';
 import 'package:myapp/features/home/data/repositories/Home_Page_Repositorie_Impl.dart';
 import 'package:myapp/features/home/domain/usecases/NowplayinUsecase.dart';
 import 'package:myapp/features/home/domain/usecases/Popularmoviesusecase.dart';
@@ -37,6 +39,37 @@ Future<void> init() async {
       sl(),
     ),
   );
+  //details page use case
+  sl.registerLazySingleton(
+    () => Getitemusecase(
+      detailspageRepository: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton(
+    () => Delateitemusecase(
+      detailspageRepository: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton(
+    () => Createitemusecase(
+      detailspageRepository: sl(),
+    ),
+  );
+//bookmark page usecase
+  sl.registerLazySingleton(
+    () => GetBookmarksdatausecase(
+      bookmarksRepository: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton(
+    () => DelateBookmarksusecase(
+      bookmarksRepository: sl(),
+    ),
+  );
+
 //bloc
   sl.registerFactory(() => NowshowingBloc(
         sl(),
@@ -73,52 +106,4 @@ Future<void> init() async {
   );
 
   // // use cases
-  // sl.registerLazySingleton(
-  //   () => GetNowPlayingMovies(
-  //     repository: sl(),
-  //   ),
-  // );
-  // sl.registerLazySingleton(
-  //   () => GetPopularMovies(
-  //     repository: sl(),
-  //   ),
-  // );
-
-  // sl.registerLazySingleton(
-  //   () => GetMovieDetails(
-  //     repository: sl(),
-  //   ),
-  // );
-
-  // // Repository
-  // sl.registerLazySingleton<HomeRepository>(
-  //   () => HomeRepositoryImpl(
-  //     remoteDataSource: sl(),
-  //     // localDataSource: sl(),
-  //     networkInfo: sl(),
-  //   ),
-  // );
-
-  // // Data source
-  // sl.registerLazySingleton<HomeMovieRemoteDataSource>(
-  //   () => HomeMovieRemoteDataSourceImpl(
-  //     client: sl(),
-  //   ),
-  // );
-
-  // // sl.registerLazySingleton<HomeMovieLocalDataSource>(() => LocalData )
-
-  // sl.registerLazySingleton<NetworkInfo>(
-  //   () => NetworkInfoImpl(
-  //     connectionChecker: sl(),
-  //   ),
-  // );
-
-  // // final db = await openDatabase();
-  // // sl.registerLazySingleton(() => )
-  // sl.registerLazySingleton(() => Dio());
-  // sl.registerLazySingleton(() => InternetConnectionChecker());
-
-  // bookmarkInjection();
-  // detailsInjection();
 }

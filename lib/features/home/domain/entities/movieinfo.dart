@@ -48,3 +48,18 @@ class Movieinfo extends Equatable {
         genre_ids
       ];
 }
+
+class Genres extends Equatable {
+  int? id;
+  String? name;
+  Genres({
+    this.id,
+    this.name,
+  });
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+      ];
+}

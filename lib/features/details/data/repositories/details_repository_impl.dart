@@ -5,8 +5,8 @@ import 'package:myapp/features/details/domain/repositories/details_repository.da
 class detailReposotoryImpl extends DetailspageRepository {
   @override
   Future<List> getDetails(String title) async {
-    final databaseresponse = await BookmarkLocalDb.getItem(title);
-    return databaseresponse;
+    final response = await BookmarkLocalDb.getItem(title);
+    return response;
   }
 
   @override
