@@ -12,7 +12,7 @@ class NowshowingDataLoading extends NowshowingState {}
 class NowshowingDataLoaded extends NowshowingState {
   final List<NowPlayingMovieModel> Nowshowingmovies;
 
-  NowshowingDataLoaded(this.Nowshowingmovies);
+  const NowshowingDataLoaded(this.Nowshowingmovies);
   @override
   List<Object> get props => [Nowshowingmovies];
 }

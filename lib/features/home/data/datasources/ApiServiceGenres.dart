@@ -19,6 +19,7 @@ class ApiServiceGenresList {
     try {
       final _response =
           await _dio.get(baseurl + 'api_key=' + key + '&language=en-US');
+          
       var genres = _response.data['genres'] as List;
       Genrelist = genres.map((m) => GenresModel.fromJson(m)).toList();
 
