@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:myapp/features/bookmark/presentation/pages/bookmarks.dart';
+import 'package:myapp/features/home/presentation/pages/homepage.dart';
 import 'package:myapp/features/home/presentation/widgets/screensize.dart';
 
 class Navbar extends StatefulWidget {
@@ -28,7 +29,7 @@ class _NavbarState extends State<Navbar> {
             onTap: () {
               Navigator.pop(context);
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => CustomScrollView()),
+                MaterialPageRoute(builder: (context) => HomePage()),
               );
             },
           ),
